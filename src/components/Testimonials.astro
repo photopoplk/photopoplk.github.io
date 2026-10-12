@@ -1,0 +1,44 @@
+---
+/**
+ * Renders nothing until real, consented testimonials exist in config.yaml.
+ * Placeholder quotes attributed to invented people would be fabricated
+ * reviews, so the section self-hides while `testimonials` is empty.
+ */
+import { config, showTestimonials } from '../lib/config';
+import Icon from './Icon.astro';
+
+const visible = showTestimonials();
+const items = config.testimonials;
+---
+
+{
+  visible && (
+    <section class="container-page py-20">
+      <div class="mx-auto mb-12 max-w-2xl text-center">
+        <p class="eyebrow mb-3">What clients say</p>
+        <h2 class="text-3xl text-ink sm:text-4xl">Loved by hosts and guests alike</h2>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        {items.map((t) => (
+          <figure class="card flex flex-col">
+            <div class="mb-4 flex gap-0.5 text-accent-500" aria-label={`${t.rating} out of 5 stars`}>
+              {Array.from({ length: t.rating }).map(() => (
+                <Icon name="star" size={16} class="fill-current" strokeWidth={0} />
+              ))}
+            </div>
+            <blockquote class="flex-1 leading-relaxed text-ink-soft">
+              &ldquo;{t.quote}&rdquo;
+            </blockquote>
+            <figcaption class="mt-5 border-t border-slate-100 pt-4">
+              <span class="block font-display font-medium text-ink">{t.name}</span>
+              <span class="block text-sm text-ink-muted">
+                {t.role} · {t.event}
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )
+}

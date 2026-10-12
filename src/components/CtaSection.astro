@@ -1,0 +1,55 @@
+---
+import { config, whatsappLink, hasRealPhone } from '../lib/config';
+import Icon from './Icon.astro';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  buttonLabel?: string;
+}
+
+const {
+  title = 'Ready to make your event unforgettable?',
+  subtitle = 'Every celebration is different. Tell us about yours and we will send a quote tailored to it.',
+  buttonLabel = 'Get your custom quote',
+} = Astro.props;
+
+const showWhatsApp = hasRealPhone();
+---
+
+<section class="container-page py-20">
+  <div
+    class="relative overflow-hidden rounded-3xl bg-ink px-6 py-16 text-center sm:px-12"
+  >
+    <div
+      class="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-brand-500 opacity-20 blur-3xl"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="relative mx-auto max-w-2xl">
+      <h2 class="text-3xl text-white sm:text-4xl">{title}</h2>
+      <p class="mt-4 leading-relaxed text-white/70">{subtitle}</p>
+
+      <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/book" class="btn-accent">
+          {buttonLabel}
+          <Icon name="arrow" size={18} />
+        </a>
+        {
+          showWhatsApp ? (
+            <a href={whatsappLink()} target="_blank" rel="noopener" class="btn-ghost-light">
+              Message on WhatsApp
+            </a>
+          ) : (
+            <a href={`mailto:${config.contact.email}`} class="btn-ghost-light">
+              Email us
+            </a>
+          )
+        }
+      </div>
+
+      <p class="mt-6 text-sm text-white/50">{config.booking.promise}</p>
+    </div>
+  </div>
+</section>

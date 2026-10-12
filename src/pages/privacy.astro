@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { config, googleFormUrl } from '../lib/config';
+
+const updated = 'April 2026';
+const usesGoogleForm = googleFormUrl() !== null;
+const gaEnabled = Boolean(config.analytics.google_analytics_id?.trim());
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="How PhotoPop collects, uses and protects your personal data when you request a quote or book a photo booth."
+>
+  <PageHeader
+    eyebrow="Legal"
+    title="Privacy Policy"
+    subtitle={`Last updated: ${updated}`}
+  />
+
+  <section class="container-page max-w-3xl py-14">
+    <div class="prose-legal">
+      <p>
+        {config.site.name} collects the minimum personal data needed to quote
+        for and run your event. This page explains what that is, where it goes
+        and how to have it removed.
+      </p>
+
+      <h2>1. What We Collect</h2>
+      <ul>
+        <li>
+          <strong>Contact details</strong> — your name, email address and phone
+          or WhatsApp number, so we can send your quote and coordinate the
+          event.
+        </li>
+        <li>
+          <strong>Event details</strong> — date, venue, guest count, package and
+          any requirements you tell us about, used for planning and pricing.
+        </li>
+        <li>
+          <strong>Event photos</strong> — the photos taken at the booth during
+          your event.
+        </li>
+      </ul>
+      <p>
+        We do not collect payment card details through this website. Deposits
+        and balances are settled directly by bank transfer or in person.
+      </p>
+
+      <h2>2. Where Your Enquiry Goes</h2>
+      {
+        usesGoogleForm ? (
+          <p>
+            Our quote request form is a Google Form. When you submit it, your
+            answers are stored in Google Forms and Google Sheets under our
+            business account, and Google processes that data on our behalf under
+            its own privacy terms. Loading the embedded form may also set
+            cookies from Google in your browser. If you would rather not use it,
+            email us at {config.contact.email} instead — the same information by
+            email works just as well.
+          </p>
+        ) : (
+          <p>
+            Enquiries reach us by email or WhatsApp and are stored in our
+            business email account. When our online quote form goes live it will
+            be a Google Form, and this section will be updated to say so.
+          </p>
+        )
+      }
+
+      <h2>3. How We Use It</h2>
+      <ul>
+        <li>
+          Your contact details are used only to discuss and deliver your
+          booking. We do not sell them and we do not add you to a marketing list
+          without your say-so.
+        </li>
+        <li>
+          Event photos may appear in our gallery and social media as portfolio
+          work, unless you or your guests ask us not to. See section 5.
+        </li>
+        <li>
+          We may keep a record of past bookings for our own accounts and to make
+          repeat bookings easier.
+        </li>
+      </ul>
+
+      <h2>4. Analytics</h2>
+      {
+        gaEnabled ? (
+          <p>
+            We use Google Analytics to understand which pages people visit and
+            where they arrive from. It records page views, approximate location
+            and device type. We do not use it to identify individual visitors.
+          </p>
+        ) : (
+          <p>
+            This website does not currently run any analytics or advertising
+            trackers. If we add analytics later, this page will be updated
+            first.
+          </p>
+        )
+      }
+
+      <h2>5. Photos &amp; Your Choices</h2>
+      <ul>
+        <li>
+          Tell us before or during the event and we will keep your photos out of
+          our gallery and social media entirely.
+        </li>
+        <li>
+          Individual guests can ask us to remove a specific photo at any time.
+        </li>
+        <li>
+          We avoid publishing full names, venue addresses or exact dates
+          alongside photos unless the client has agreed to it.
+        </li>
+      </ul>
+
+      <h2>6. Retention</h2>
+      <ul>
+        <li>
+          Event photos are kept for 12 months so you can re-download them, then
+          deleted from our active storage.
+        </li>
+        <li>
+          Enquiry and booking records are kept for as long as needed for our
+          business accounts.
+        </li>
+        <li>
+          You can ask us to delete your data sooner at any point.
+        </li>
+      </ul>
+
+      <h2>7. Security</h2>
+      <ul>
+        <li>This website is served over HTTPS.</li>
+        <li>
+          Photo galleries are shared as private links rather than published
+          openly.
+        </li>
+        <li>
+          The website itself holds no database — it is a static site, and no
+          personal data is stored on it.
+        </li>
+      </ul>
+
+      <h2>8. Your Rights</h2>
+      <p>
+        You can ask us at any time to show you what data we hold about you,
+        correct it, or delete it. Email
+        <a href={`mailto:${config.contact.email}`}>{config.contact.email}</a> and
+        we will action it within a few days.
+      </p>
+
+      <h2>9. Changes</h2>
+      <p>
+        If this policy changes we will update this page and the date at the top.
+        For anything unclear, just ask — we would rather explain than have you
+        guess.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

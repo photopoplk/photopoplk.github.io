@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import StatBand from '../components/StatBand.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import { config } from '../lib/config';
+import { photo, isPlaceholder } from '../lib/photos';
+
+// Team members come from about.team in config.yaml — deliberately not written
+// here. This repository is public, so names in the source would be readable
+// on GitHub even while the section is switched off.
+const team = config.about.team.filter((member) => member.name?.trim());
+const showTeam = config.about.show_team && team.length > 0;
+---
+
+<BaseLayout
+  title="About Us"
+  description="PhotoPop is a photo booth rental company based in Colombo, Sri Lanka, bringing professional automated photo booths to weddings, corporate events and celebrations."
+  keywords="about PhotoPop, photo booth company Sri Lanka, photo booth rental Colombo"
+>
+  <PageHeader
+    eyebrow="About"
+    title="Capturing moments since 2026"
+    subtitle="We started PhotoPop because events in Colombo deserved better than a webcam in a box."
+  />
+
+  {/* ---------------------------------------------------------------- Story */}
+  <section class="container-page py-16">
+    <div class="mx-auto max-w-3xl space-y-5 text-lg leading-relaxed text-ink-soft">
+      <p>
+        Go to enough weddings and receptions in Colombo and you notice the same
+        thing: dinner, dancing, and a lot of guests on their phones. The
+        entertainment that people genuinely remember — the thing they talk about
+        afterwards — is usually missing.
+      </p>
+      <p>
+        Photo booths solve that, but only when they're done properly. Too many
+        are a tablet on a stand with a cheap printer, producing photos nobody
+        wants to keep. We wanted the opposite: a real DSLR, proper lighting, and
+        prints that come out fast enough that people queue up for a second turn.
+      </p>
+      <p>
+        So we built PhotoPop — a professional, fully automated booth that guests
+        operate themselves, with prints in seconds and every photo delivered
+        digitally the same day. And it arrives early, set up by people who know
+        Colombo's venues.
+      </p>
+      <p class="font-medium text-ink">
+        Our aim is simple: make your event the one people bring up a year later.
+      </p>
+    </div>
+  </section>
+
+  {/* --------------------------------------------------------------- Founders */}
+  {/* Off until about.show_team is true and about.team has names. While off,
+      no names, roles or portraits reach the built site at all. */}
+  {
+    showTeam && (
+      <section class="bg-slate-50 py-20">
+        <div class="container-page">
+          <div class="mx-auto mb-12 max-w-2xl text-center">
+            <p class="eyebrow mb-3">The team</p>
+            <h2 class="text-3xl text-ink sm:text-4xl">Who you'll be dealing with</h2>
+          </div>
+
+          <div class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
+            {team.map((person) => (
+              <article class="card overflow-hidden p-0">
+                <Photo
+                  name={person.photo}
+                  alt={
+                    isPlaceholder(photo(person.photo))
+                      ? `Portrait placeholder for ${person.name}`
+                      : `Portrait of ${person.name}`
+                  }
+                  widths={[400, 800]}
+                  sizes="(min-width: 640px) 360px, 92vw"
+                  class="h-64 w-full object-cover object-top"
+                />
+                <div class="p-6">
+                  <h3 class="text-xl text-ink">{person.name}</h3>
+                  <p class="mt-1 text-sm font-semibold text-brand-600">{person.role}</p>
+                  <p class="mt-3 text-sm leading-relaxed text-ink-soft">{person.bio}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {/* ---------------------------------------------------------------- Why us */}
+  <section class="container-page py-20">
+    <div class="mx-auto mb-14 max-w-2xl text-center">
+      <p class="eyebrow mb-3">Why PhotoPop</p>
+      <h2 class="text-3xl text-ink sm:text-4xl">What makes the difference</h2>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        config.why_us.map((item) => (
+          <div class="card-hover">
+            <span class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+              <Icon name="check-circle" size={22} />
+            </span>
+            <h3 class="text-lg text-ink">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{item.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <StatBand />
+
+  {/* ---------------------------------------------------------------- Values */}
+  <section class="container-page py-20">
+    <div class="mx-auto mb-12 max-w-2xl text-center">
+      <p class="eyebrow mb-3">Our values</p>
+      <h2 class="text-3xl text-ink sm:text-4xl">How we work</h2>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      {
+        config.values.map((value) => (
+          <div class="rounded-2xl border-l-4 border-accent-500 bg-slate-50 p-7">
+            <h3 class="text-lg text-ink">{value.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{value.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaSection
+    title="Ready to add PhotoPop to your event?"
+    subtitle="We reply to every enquiry personally — usually within a couple of hours."
+  />
+</BaseLayout>

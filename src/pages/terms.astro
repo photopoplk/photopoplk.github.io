@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { config } from '../lib/config';
+
+const updated = 'April 2026';
+---
+
+<BaseLayout
+  title="Terms & Conditions"
+  description="PhotoPop's terms and conditions for photo booth rental bookings in Sri Lanka — payment, cancellation, service scope and liability."
+>
+  <PageHeader
+    eyebrow="Legal"
+    title="Terms & Conditions"
+    subtitle={`Last updated: ${updated}`}
+  />
+
+  <section class="container-page max-w-3xl py-14">
+    <div class="prose-legal">
+      <p>
+        These terms apply to all photo booth rental bookings with {config.site.name}
+        (&ldquo;we&rdquo;, &ldquo;us&rdquo;). By confirming a booking you agree to them.
+      </p>
+
+      <h2>1. Booking &amp; Payment</h2>
+      <ul>
+        <li>A 50% deposit confirms your date. Dates are not held without it.</li>
+        <li>The balance is due 3 days before the event.</li>
+        <li>Payment can be made by bank transfer, cash, or online transfer.</li>
+        <li>
+          Prices quoted are valid for 14 days from the date of the quote.
+        </li>
+      </ul>
+
+      <h2>2. Cancellation &amp; Rescheduling</h2>
+      <ul>
+        <li>The deposit is non-refundable in all cases.</li>
+        <li>
+          Cancel more than 14 days before the event and the balance is refunded
+          in full.
+        </li>
+        <li>
+          Cancel within 14 days of the event and the balance remains payable.
+        </li>
+        <li>
+          Rescheduling is free if requested more than 14 days ahead and we have
+          the new date available.
+        </li>
+        <li>
+          In the case of force majeure — natural disaster, public emergency, or
+          government restriction — we will reschedule at no cost, or refund in
+          full if no date works.
+        </li>
+      </ul>
+
+      <h2>3. Service Scope</h2>
+      <ul>
+        <li>We arrive 30 minutes before your booked start time to set up.</li>
+        <li>Teardown is included in every package.</li>
+        <li>
+          Support is available by phone or WhatsApp throughout your event.
+        </li>
+        <li>Digital photos are delivered within 24 hours of the event.</li>
+        <li>
+          Booked hours run from the agreed start time. Delays caused by the
+          venue or event schedule do not extend the booking unless extra hours
+          are agreed and paid for.
+        </li>
+      </ul>
+
+      <h2>4. Venue Requirements</h2>
+      <ul>
+        <li>
+          A minimum footprint of roughly 8 ft × 8 ft, on a level surface.
+        </li>
+        <li>
+          Access to a standard 13A power socket within reach of the booth.
+        </li>
+        <li>
+          Cover from rain and direct sun for outdoor placements. If a suitable
+          position is not available on arrival, we may be unable to operate and
+          the booking remains payable.
+        </li>
+        <li>
+          Reasonable access for delivery — please tell us in advance about
+          stairs, lifts or long carries.
+        </li>
+      </ul>
+
+      <h2>5. Guest Photos &amp; Consent</h2>
+      <p>
+        Guests using the booth consent to their photos being used by {
+          config.site.name
+        } for portfolio and marketing purposes. If you or a guest would prefer
+        photos not to be used this way, tell us before or during the event and
+        we will exclude them. You can also request removal at any time
+        afterwards by emailing {config.contact.email}.
+      </p>
+
+      <h2>6. Liability</h2>
+      <ul>
+        <li>
+          We are not responsible for personal items lost or damaged at the
+          booth.
+        </li>
+        <li>
+          Photos are delivered as taken. Retouching is not included.
+        </li>
+        <li>
+          Should a technical fault interrupt the booth, we will fix it as
+          quickly as we can. If a fault on our side causes significant lost
+          time, we will refund a fair proportion of the fee.
+        </li>
+        <li>
+          Guests are responsible for treating the equipment and props with
+          reasonable care. Deliberate damage may be charged to the client.
+        </li>
+      </ul>
+
+      <h2>7. Intellectual Property</h2>
+      <ul>
+        <li>
+          You are free to print, share and store your event photos for personal
+          use.
+        </li>
+        <li>
+          We retain the right to use event photos for our own portfolio and
+          marketing, subject to section 5.
+        </li>
+        <li>
+          Our booth software, overlay designs and branding remain our property.
+        </li>
+      </ul>
+
+      <h2>8. Data &amp; Privacy</h2>
+      <p>
+        We collect only what we need to plan and deliver your booking. See our
+        <a href="/privacy">Privacy Policy</a> for what is collected, how long we
+        keep it and how to have it deleted.
+      </p>
+
+      <h2>9. Questions</h2>
+      <p>
+        Anything here you would like clarified before booking? Email
+        <a href={`mailto:${config.contact.email}`}>{config.contact.email}</a> and
+        we will answer plainly.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

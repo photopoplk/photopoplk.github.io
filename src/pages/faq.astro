@@ -1,0 +1,260 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FaqItem from '../components/FaqItem.astro';
+import Icon from '../components/Icon.astro';
+import { config, whatsappLink, hasRealPhone } from '../lib/config';
+
+const showWhatsApp = hasRealPhone();
+
+const sections = [
+  {
+    title: 'About PhotoPop',
+    faqs: [
+      {
+        q: 'What makes PhotoPop different from other booths?',
+        a: 'We use a professional DSLR camera rather than a webcam or tablet, with proper lighting and a high-speed dye-sublimation printer. The booth is fully automated, so guests operate it themselves without waiting for an attendant.',
+      },
+      {
+        q: 'How long does setup take?',
+        a: 'We arrive 30 minutes before your start time and have the booth live and tested in about 20 minutes. Teardown takes 15 minutes and happens after your guests are done.',
+      },
+      {
+        q: 'Do you provide support during the event?',
+        a: 'Yes. A dedicated attendant is included with Platinum and Diamond, and available on request for other packages. We also monitor the booth remotely and can talk your venue contact through anything minor.',
+      },
+      {
+        q: 'How much space does the booth need?',
+        a: 'About 8 feet by 8 feet, including room for guests to stand back. We can work with less — send us your venue dimensions and we will confirm the fit before the day.',
+      },
+    ],
+  },
+  {
+    title: 'Booking & Pricing',
+    faqs: [
+      {
+        q: 'How do I get a quote?',
+        a: 'Fill in the form on our booking page, or message us directly. We reply within two hours during the day.',
+      },
+      {
+        q: 'Is the quoted price final?',
+        a: 'Yes. Your quote covers the package and any add-ons you have chosen, including setup, teardown and travel within Colombo. Nothing is added afterwards unless you ask for something extra on the day.',
+      },
+      {
+        q: 'Do you offer discounts?',
+        a: 'We have early-bird rates for off-season dates (January to March, September to October), and corporate bookings are negotiable. Booking three or more events gets you 10% off the package price.',
+      },
+      {
+        q: 'What is your cancellation policy?',
+        a: 'A 50% deposit confirms your date and is non-refundable. Cancel more than 14 days before the event and the balance is refunded in full. Within 14 days, the balance is also due. See our Terms for the detail.',
+      },
+      {
+        q: 'How far in advance should I book?',
+        a: 'Four to six weeks is comfortable, and wedding season fills earliest. That said, we often have short-notice dates open — always worth asking.',
+      },
+    ],
+  },
+  {
+    title: 'Photos & Technology',
+    faqs: [
+      {
+        q: 'How are the photos delivered?',
+        a: 'Printed photos are handed to guests at the booth. Digital copies go out as a gallery link within 24 hours of the event — high resolution and downloadable.',
+      },
+      {
+        q: 'Can guests share photos during the event?',
+        a: 'Yes. Every print carries a QR code that opens the gallery, so guests can grab their photos and post them before the night is over.',
+      },
+      {
+        q: 'What if a photo does not come out well?',
+        a: 'We will reprint it, no charge. Print quality is checked at setup and monitored through the event.',
+      },
+      {
+        q: 'Can I get all the photos on a USB drive?',
+        a: 'A USB with all high-resolution files is included with Diamond. For other packages you get the same files through the online gallery, which you can download in full.',
+      },
+      {
+        q: 'Can we put our logo on the photos?',
+        a: 'Yes. A branded overlay is included from Gold upwards, and available as an add-on for Silver. Send us your logo and event colours and we will design it.',
+      },
+    ],
+  },
+  {
+    title: 'On the Day',
+    faqs: [
+      {
+        q: 'What if the weather turns?',
+        a: 'The booth needs cover. For outdoor venues we agree a sheltered position with you in advance, and if heavy rain arrives we can pause safely and resume.',
+      },
+      {
+        q: 'How fast are the prints?',
+        a: 'About six seconds per photo. That keeps the queue moving even at busy moments.',
+      },
+      {
+        q: 'What if you run out of paper?',
+        a: 'We bring spare paper to every event. For very high volume — over 200 prints — tell us in advance and we will load extra.',
+      },
+      {
+        q: 'Do guests need instructions?',
+        a: 'Rarely. The touchscreen walks them through it and most people work it out in about 30 seconds. We leave instruction cards at the booth as well.',
+      },
+      {
+        q: 'What power do you need?',
+        a: 'A standard 13A socket within reach of the booth. We bring our own extension leads and surge protection.',
+      },
+    ],
+  },
+  {
+    title: 'Venues & Partnerships',
+    faqs: [
+      {
+        q: 'Do you travel outside Colombo?',
+        a: 'Yes, anywhere in Sri Lanka. Travel is quoted separately for destinations like Kandy, Galle and further out.',
+      },
+      {
+        q: 'Do you work with venues and planners?',
+        a: 'We do. If you run a hotel, banquet hall or planning business, get in touch about partnership terms.',
+      },
+      {
+        q: 'Can you do long-term placements?',
+        a: 'Yes — shopping centres, showrooms and month-long activations. These are quoted individually, so email us with the dates and location.',
+      },
+      {
+        q: 'Do you cover multiple events on the same day?',
+        a: 'Sometimes, depending on timings and distance. Ask and we will tell you honestly whether we can do both properly.',
+      },
+    ],
+  },
+];
+
+const allFaqs = sections.flatMap((section) => section.faqs);
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: allFaqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+};
+---
+
+<BaseLayout
+  title="Frequently Asked Questions"
+  description="Answers to common questions about PhotoPop photo booth rental in Sri Lanka — booking, pricing, photo delivery, setup requirements and event-day logistics."
+  keywords="photo booth questions, how does a photo booth work, photo booth rental FAQ Sri Lanka"
+  schema={[faqSchema]}
+>
+  <PageHeader
+    eyebrow="FAQ"
+    title="Frequently asked questions"
+    subtitle={`Can't find your answer? Email us at ${config.contact.email} and we will get back to you the same day.`}
+  >
+    <div class="mx-auto mt-8 max-w-md">
+      <label for="faq-search" class="sr-only">Search questions</label>
+      <div class="relative">
+        <Icon
+          name="search"
+          size={18}
+          class="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-ink-muted"
+        />
+        <input
+          type="search"
+          id="faq-search"
+          placeholder="Search — try 'deposit' or 'rain'"
+          autocomplete="off"
+          class="w-full rounded-full border border-slate-300 bg-white py-3 pr-4 pl-11 text-sm text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none"
+        />
+      </div>
+    </div>
+  </PageHeader>
+
+  <section class="container-page max-w-3xl py-14">
+    <p class="sr-only" role="status" id="faq-status"></p>
+
+    {
+      sections.map((section) => (
+        <div class="mb-10" data-faq-section>
+          <h2 class="mb-3 font-display text-sm font-medium tracking-[0.14em] text-brand-600 uppercase">
+            {section.title}
+          </h2>
+          <div class="rounded-2xl border border-slate-200 bg-white px-6">
+            {section.faqs.map((faq) => (
+              <FaqItem question={faq.q} searchable={`${faq.q} ${faq.a}`}>
+                {faq.a}
+              </FaqItem>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+
+    <p id="faq-empty" class="hidden py-10 text-center text-ink-muted">
+      No questions match that search. Try a different word, or just ask us
+      directly.
+    </p>
+  </section>
+
+  {/* ------------------------------------------------------------ Still stuck */}
+  <section class="bg-slate-50 py-16">
+    <div class="container-page text-center">
+      <h2 class="text-2xl text-ink sm:text-3xl">Still have questions?</h2>
+      <p class="mx-auto mt-3 max-w-lg leading-relaxed text-ink-soft">
+        Ask us anything about your event — we would rather answer twenty
+        questions than have you guess.
+      </p>
+      <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+        {
+          showWhatsApp && (
+            <a href={whatsappLink()} target="_blank" rel="noopener" class="btn-accent">
+              Message on WhatsApp
+            </a>
+          )
+        }
+        <a href={`mailto:${config.contact.email}`} class="btn-outline">
+          Email {config.contact.email}
+        </a>
+        <a href="/book" class="btn-primary">Get a quote</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const search = document.getElementById('faq-search') as HTMLInputElement | null;
+  const empty = document.getElementById('faq-empty');
+  const status = document.getElementById('faq-status');
+  const sections = document.querySelectorAll<HTMLElement>('[data-faq-section]');
+  const items = document.querySelectorAll<HTMLDetailsElement>('[data-faq]');
+
+  search?.addEventListener('input', () => {
+    const query = search.value.trim().toLowerCase();
+    let matches = 0;
+
+    items.forEach((item) => {
+      const haystack = item.dataset.search ?? '';
+      const hit = query === '' || haystack.includes(query);
+      item.classList.toggle('hidden', !hit);
+      // Open matching answers while searching so the hit is visible.
+      item.open = hit && query.length > 1;
+      if (hit) matches += 1;
+    });
+
+    // Hide a section heading when every question under it is filtered out.
+    sections.forEach((section) => {
+      const visible = section.querySelectorAll('[data-faq]:not(.hidden)').length;
+      section.classList.toggle('hidden', visible === 0);
+    });
+
+    empty?.classList.toggle('hidden', matches > 0);
+    if (status) {
+      status.textContent =
+        query === ''
+          ? ''
+          : matches === 1
+            ? `1 question matches "${query}"`
+            : `${matches} questions match "${query}"`;
+    }
+  });
+</script>

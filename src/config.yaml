@@ -1,0 +1,319 @@
+# ============================================================================
+#  PhotoPop — Site Configuration
+#  Edit this file to update the website. No code changes needed.
+#  After editing: commit and push to develop; merge into main to publish.
+#  This repository is PUBLIC — anything in this file is readable on GitHub.
+# ============================================================================
+#
+#  Full walkthrough: docs/LAUNCH_GUIDE.md
+#
+#  BEFORE LAUNCH — replace every value marked TODO:
+#    1. contact.phone / contact.whatsapp  -> real number, e.g. "+94771234567"
+#    2. contact.email / bookings_email    -> addresses that actually receive mail
+#    3. social.*                          -> confirm each account exists, or blank it
+#    4. booking.google_form_id            -> see docs/GOOGLE_FORM_SETUP.md
+#    5. analytics.google_analytics_id     -> GA4 measurement ID (optional)
+#    6. launch.pre_launch                 -> set to false after first real events
+#
+#  Text values go in "double quotes". If a value contains a double quote,
+#  write it as \" — or the build will stop with an error pointing at the line.
+# ============================================================================
+
+site:
+  name: "PhotoPop"
+  tagline: "Sri Lanka's Premier Photo Booth Experience"
+  domain: "photopop.lk"
+  url: "https://photopop.lk"
+  description: "Automated, self-service photo booth rental for weddings, corporate events and celebrations in Colombo, Sri Lanka. Instant prints, digital delivery, professional DSLR quality."
+  founded_year: 2026
+
+contact:
+  email: "hello@photopop.lk"         # TODO: must receive mail before launch
+  bookings_email: "bookings@photopop.lk"  # TODO: same — or set to the hello@ address
+  phone: "+94XXXXXXXXX"              # TODO: real number, country code, no spaces
+  whatsapp: "+94XXXXXXXXX"           # TODO: usually the same number
+  whatsapp_preset: "Hi PhotoPop, I'd like to book your photo booth for my event!"
+  city: "Colombo"
+  region: "Western Province"
+  country: "LK"
+  timezone: "Asia/Colombo"
+  response_time: "within 2 hours"
+
+# Handles only — no @ and no URL. Leave a value blank ("") to hide that
+# platform everywhere on the site until the account exists.
+social:
+  instagram: "photopoplk"
+  facebook: "PhotoPopLK"
+  tiktok: "photopoplk"
+  youtube: ""
+  linkedin: ""
+
+# --- Launch state -----------------------------------------------------------
+# While pre_launch is true the site shows honest launch messaging instead of
+# event counters, and testimonials/ratings stay hidden. Flip to false and fill
+# in `metrics` + `testimonials` once you have real events and real reviews.
+launch:
+  pre_launch: true
+  launch_label: "Launching 2026"
+  founding_offer: "Founding-client rates for our first 10 bookings"
+  founding_offer_detail: "Be one of our first events and lock in launch pricing — plus a free custom branded photo overlay."
+
+# Only rendered when launch.pre_launch is false. Keep these truthful.
+metrics:
+  events_completed: 0
+  happy_guests: 0
+  photos_printed: 0
+  reviews_5star: 0
+  avg_rating: 0
+
+# Only rendered when launch.pre_launch is false. Add real, consented quotes.
+testimonials: []
+# Example once you have a real one:
+#   - name: "Ravi S."
+#     role: "Groom"
+#     event: "Wedding, Colombo"
+#     quote: "The booth was the star of our wedding."
+#     rating: 5
+#     date: "2026-07-10"
+
+# --- About page -------------------------------------------------------------
+# The founders' section (names, roles, portraits). Shown only when show_team is
+# true AND at least one member below has a name. Portraits go in
+# src/assets/photos/team/ as member-1.jpg, member-2.jpg (see docs/LAUNCH_GUIDE.md).
+#
+# Leave the names blank until you're ready to be public: this repository is
+# public, so anything typed here can be read on GitHub even while show_team
+# is false — and stays in its history after you delete it.
+about:
+  show_team: false
+  team:
+    - name: ""
+      role: ""
+      bio: ""
+      photo: "team/member-1"
+    - name: ""
+      role: ""
+      bio: ""
+      photo: "team/member-2"
+
+# --- Booking ----------------------------------------------------------------
+booking:
+  # TODO: paste the ID from your Google Form's embed URL.
+  # See docs/GOOGLE_FORM_SETUP.md. Until this is set, /book shows a
+  # WhatsApp + email fallback panel instead of the embedded form.
+  google_form_id: ""
+  form_height_px: 1500
+  promise: "No commitment. We reply within 2 hours."
+  trust_signals:
+    - "Professional DSLR quality"
+    - "Instant prints & digital delivery"
+    - "Same-day response"
+    - "No hidden costs"
+
+# --- Pricing ----------------------------------------------------------------
+# The public site shows "from LKR X" only — never exact totals. This leaves
+# room to negotiate and keeps the cost structure out of competitors' hands.
+pricing:
+  currency: "LKR"
+  note: "All packages include setup, teardown and props. Travel outside Colombo is quoted separately."
+  packages:
+    - id: "silver"
+      name: "Silver"
+      price: 25000
+      duration: "2 hours"
+      tagline: "Perfect for intimate celebrations"
+      target_audience: "Birthdays, small office parties, college events"
+      featured: false
+      features:
+        - "Unlimited photo sessions"
+        - "Digital photos via WhatsApp"
+        - "Standard white or black backdrop"
+        - "Full prop box included"
+        - "Guest instruction card"
+        - "Setup & teardown included"
+    - id: "gold"
+      name: "Gold"
+      price: 40000
+      duration: "3 hours"
+      tagline: "Our most popular package"
+      target_audience: "Weddings, SME product launches"
+      featured: true
+      features:
+        - "Everything in Silver"
+        - "Unlimited 4x6 prints on the spot"
+        - "Premium backdrop options"
+        - "Branded photo overlay"
+        - "Optional live photo display screen"
+        - "Online gallery link for all guests"
+    - id: "platinum"
+      name: "Platinum"
+      price: 60000
+      duration: "4 hours"
+      tagline: "For events that need to impress"
+      target_audience: "Premium weddings, large corporate events"
+      featured: false
+      features:
+        - "Everything in Gold"
+        - "Fully custom branded overlay"
+        - "Premium + custom backdrop"
+        - "Digital guest book"
+        - "Dedicated booth attendant"
+        - "Priority scheduling"
+    - id: "diamond"
+      name: "Diamond"
+      price: 85000
+      duration: "Full day (8 hours)"
+      tagline: "The complete experience"
+      target_audience: "Luxury and destination weddings, conferences"
+      featured: false
+      features:
+        - "Everything in Platinum"
+        - "Dual booth setup"
+        - "Complete custom branding suite"
+        - "Live social media display"
+        - "Dedicated attendant + assistant"
+        - "USB drive with all high-res photos"
+
+# Feature comparison matrix for the /packages table.
+# Values: true, false, or a short string label.
+comparison:
+  - feature: "Unlimited photo sessions"
+    silver: true
+    gold: true
+    platinum: true
+    diamond: true
+  - feature: "Digital delivery (WhatsApp + gallery link)"
+    silver: true
+    gold: true
+    platinum: true
+    diamond: true
+  - feature: "Props box"
+    silver: true
+    gold: true
+    platinum: true
+    diamond: true
+  - feature: "Setup & teardown included"
+    silver: true
+    gold: true
+    platinum: true
+    diamond: true
+  - feature: "Unlimited instant prints"
+    silver: false
+    gold: true
+    platinum: true
+    diamond: true
+  - feature: "Premium backdrop options"
+    silver: false
+    gold: true
+    platinum: true
+    diamond: true
+  - feature: "Branded photo overlay"
+    silver: false
+    gold: "Standard"
+    platinum: "Custom"
+    diamond: "Full suite"
+  - feature: "Live photo display screen"
+    silver: false
+    gold: "Optional"
+    platinum: true
+    diamond: true
+  - feature: "Digital guest book"
+    silver: false
+    gold: false
+    platinum: true
+    diamond: true
+  - feature: "Dedicated booth attendant"
+    silver: false
+    gold: false
+    platinum: true
+    diamond: "+ assistant"
+  - feature: "Dual booth setup"
+    silver: false
+    gold: false
+    platinum: false
+    diamond: true
+  - feature: "USB drive with high-res photos"
+    silver: false
+    gold: false
+    platinum: false
+    diamond: true
+
+addons:
+  - name: "Custom Branding"
+    description: "A branded photo overlay designed around your logo and event colours."
+    price: 10000
+    icon: "palette"
+  - name: "Premium Backdrop"
+    description: "Themed backdrop — floral, sequin, rustic, or custom-built for you."
+    price: 5000
+    icon: "sparkles"
+  - name: "Extended Hours"
+    description: "Keep the booth running past your package time."
+    price: 7500
+    per: "per hour"
+    icon: "clock"
+  - name: "360 Video Booth"
+    description: "An immersive 360-degree slow-motion video station — the reel your guests will actually post."
+    price: 15000
+    icon: "video"
+  - name: "Digital Guest Book"
+    description: "Video messages and signed photos compiled into a keepsake album."
+    price: 5000
+    icon: "book"
+  - name: "Live Social Display"
+    description: "Photos appear on a big screen in real time as guests shoot them."
+    price: 8000
+    icon: "tv"
+
+# --- Content blocks ---------------------------------------------------------
+how_it_works:
+  - step: 1
+    title: "Book"
+    description: "Tell us your date and pick a package. We confirm availability within 2 hours."
+    icon: "calendar"
+  - step: 2
+    title: "We Set Up"
+    description: "We arrive 30 minutes early. The booth is live and tested in 20 minutes."
+    icon: "truck"
+  - step: 3
+    title: "Everyone Enjoys"
+    description: "Guests shoot unlimited photos, walk away with prints, and get digital copies the same day."
+    icon: "smile"
+
+why_us:
+  - title: "Professional DSLR Quality"
+    description: "A real DSLR camera and studio lighting — not a webcam in a box. The difference is obvious in every print."
+  - title: "Fast, Clean Setup"
+    description: "The booth arrives pre-configured. Twenty minutes and we are live, with no disruption to your run sheet."
+  - title: "Instant Results"
+    description: "Prints in seconds and digital copies the same day. Nobody waits weeks for photos."
+  - title: "Genuinely Self-Service"
+    description: "An intuitive touchscreen means guests use it on their own. No queue-master required."
+  - title: "Local Expertise"
+    description: "We know Colombo venues, power quirks, monsoon season, and how Sri Lankan events actually run."
+  - title: "Honest Pricing"
+    description: "One quote with everything included. No surprise charges after the event."
+
+values:
+  - title: "Quality"
+    description: "Professional equipment, properly maintained. No compromises on the thing your guests take home."
+  - title: "Reliability"
+    description: "We arrive early, every time. Your event runs to a schedule and so do we."
+  - title: "Innovation"
+    description: "We keep upgrading the tech so your event feels current, not like a booth from 2015."
+
+# --- SEO --------------------------------------------------------------------
+seo:
+  title_template: "%s | PhotoPop — Photo Booth Rental Sri Lanka"
+  default_description: "Premium automated photo booth rental in Colombo, Sri Lanka. Weddings, corporate events and parties. Instant prints and digital delivery."
+  keywords: "photo booth rental Colombo, photo booth hire Sri Lanka, wedding photo booth, corporate event entertainment"
+  author: "PhotoPop"
+
+analytics:
+  google_analytics_id: ""            # TODO (optional): "G-XXXXXXXXXX"
+
+# Generated from brand/photopop-logo.png by `npm run brand` — do not edit by hand.
+assets:
+  logo: "/images/logo.webp"
+  logo_png: "/images/logo.png"
+  og_image: "/images/og-image.png"

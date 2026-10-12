@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   PhotoPop design tokens
+
+   Palette is sampled from the logo: a vivid rose-pink lettering with a deeper
+   pink extrude, on near-black type. The site uses that pink as its single
+   accent, soft pink washes for surfaces, and warm neutrals for everything
+   else — one colour, lots of white space.
+   --------------------------------------------------------------------------- */
+@theme {
+  /* Brand pink — 500 is the logo face, 600 the logo shade. */
+  --color-brand-50: #fff4f8;
+  --color-brand-100: #ffe4ef;
+  --color-brand-200: #ffc8df;
+  --color-brand-300: #ffa1c8;
+  --color-brand-400: #fa76ae;
+  --color-brand-500: #f04e96;
+  --color-brand-600: #d02873;
+  --color-brand-700: #b52465;
+  --color-brand-800: #8a1b4d;
+  --color-brand-900: #5c1234;
+
+  /* Accent shares the brand hue — a single-accent palette keeps it minimal. */
+  --color-accent-50: #fff4f8;
+  --color-accent-100: #ffe4ef;
+  --color-accent-200: #ffc8df;
+  --color-accent-300: #ffa1c8;
+  --color-accent-400: #fa76ae;
+  --color-accent-500: #f04e96;
+  --color-accent-600: #d02873;
+  --color-accent-700: #b52465;
+  --color-accent-800: #8a1b4d;
+  --color-accent-900: #5c1234;
+
+  /* Neutrals. `ink` doubles as body text and as the dark surface colour. */
+  --color-ink: #1a1a1d;
+  --color-ink-soft: #55555c;
+  --color-ink-muted: #6e6e76;
+
+  /* Tailwind's default slate is blue-cast, which fights the pink. Redefining
+     it here re-tones every existing slate-* utility to a warm neutral. */
+  --color-slate-50: #faf9fa;
+  --color-slate-100: #f4f2f4;
+  --color-slate-200: #e9e6e9;
+  --color-slate-300: #d4d0d4;
+  --color-slate-400: #a9a4aa;
+  --color-slate-500: #8b8b93;
+
+  --color-whatsapp: #25d366;
+
+  /* DM Sans — the closest openly licensed relative of Google Sans: geometric,
+     low contrast, quiet. Google Sans itself is not licensed for third-party
+     use, so it cannot be served here. */
+  --font-display: "DM Sans", ui-sans-serif, system-ui, "Segoe UI", Arial,
+    sans-serif;
+  --font-body: "DM Sans", ui-sans-serif, system-ui, "Segoe UI", Arial,
+    sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  /* Display sizes get tighter tracking — the geometric forms can take it. */
+  h1 {
+    letter-spacing: -0.035em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Shared button base. Tailwind v4 cannot @apply custom classes, so the
+     variants share this selector list rather than composing `.btn`. */
+  .btn,
+  .btn-primary,
+  .btn-accent,
+  .btn-outline,
+  .btn-ghost-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
+      text-[0.95rem] font-medium transition-colors duration-200
+      focus-visible:outline-2 focus-visible:outline-offset-3;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  /* Pink solid — the primary call to action. */
+  .btn-accent {
+    @apply bg-brand-600 text-white hover:bg-brand-700;
+  }
+
+  /* Near-black solid — for pages where pink would compete. */
+  .btn-primary {
+    @apply bg-ink text-white hover:bg-ink/85;
+  }
+
+  .btn-outline {
+    @apply border border-slate-300 bg-transparent text-ink hover:border-ink
+      hover:bg-slate-50;
+  }
+
+  .btn-ghost-light {
+    @apply border border-white/30 bg-transparent text-white hover:bg-white/10;
+  }
+
+  /* Flat cards, hairline borders, no drop shadows — the restraint is the
+     point. Depth comes from spacing, not elevation. */
+  .card,
+  .card-hover {
+    @apply rounded-2xl border border-slate-200 bg-white p-7 transition-colors
+      duration-200;
+  }
+
+  .card-hover {
+    @apply hover:border-brand-300;
+  }
+
+  /* Gallery filter pill. The active look keys off aria-pressed via a plain
+     attribute selector, so the visual state and the accessible state are the
+     same fact and cannot drift apart. */
+  .filter-pill {
+    @apply rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm
+      font-medium text-ink-soft transition-colors hover:border-ink hover:text-ink;
+    font-family: var(--font-display);
+  }
+
+  .filter-pill[aria-pressed='true'] {
+    @apply border-brand-600 bg-brand-600 text-white hover:border-brand-600
+      hover:text-white;
+  }
+
+  .eyebrow {
+    @apply text-xs font-medium tracking-[0.18em] text-brand-600 uppercase;
+    font-family: var(--font-display);
+  }
+
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .prose-legal {
+    @apply text-base leading-relaxed text-ink-soft;
+  }
+
+  .prose-legal h2 {
+    @apply mt-10 mb-3 text-xl text-ink;
+  }
+
+  .prose-legal h3 {
+    @apply mt-7 mb-2 text-lg text-ink;
+  }
+
+  .prose-legal p {
+    @apply mb-4;
+  }
+
+  .prose-legal ul {
+    @apply mb-4 list-disc space-y-2 pl-6;
+  }
+
+  .prose-legal a {
+    @apply text-brand-600 underline underline-offset-2 hover:text-brand-700;
+  }
+}

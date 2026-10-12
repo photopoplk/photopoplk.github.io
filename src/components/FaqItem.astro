@@ -1,0 +1,42 @@
+---
+/**
+ * Native <details>/<summary> accordion — keyboard accessible and works with
+ * JavaScript disabled, so no script is needed.
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+  question: string;
+  /** Lowercased haystack used by the /faq search filter. */
+  searchable?: string;
+}
+
+const { question, searchable } = Astro.props;
+---
+
+<details
+  class="group border-b border-slate-200 last:border-0"
+  data-faq
+  data-search={(searchable ?? question).toLowerCase()}
+>
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-display text-base font-semibold text-ink transition-colors hover:text-brand-600"
+  >
+    {question}
+    <Icon
+      name="chevron"
+      size={18}
+      class="shrink-0 text-brand-500 transition-transform duration-200 group-open:rotate-180"
+    />
+  </summary>
+  <div class="pb-5 text-sm leading-relaxed text-ink-soft">
+    <slot />
+  </div>
+</details>
+
+<style>
+  /* Hide the default disclosure triangle in Safari/Chrome. */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

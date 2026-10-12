@@ -1,0 +1,117 @@
+---
+/**
+ * Every meta tag from Website_Architecture.md §9.2, plus optional JSON-LD.
+ */
+import { config } from '../lib/config';
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  /** Any schema.org objects to emit as JSON-LD. */
+  schema?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = config.seo.default_description,
+  keywords = config.seo.keywords,
+  ogImage = config.assets.og_image,
+  ogType = 'website',
+  noindex = false,
+  schema = [],
+} = Astro.props;
+
+const fullTitle = config.seo.title_template.replace('%s', title);
+// Pages build as about.html (see astro.config.mjs) but are served at /about,
+// so drop the file extension to match the links and the sitemap.
+const cleanPath = Astro.url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+const canonical = new URL(cleanPath, Astro.site ?? config.site.url);
+const ogImageUrl = new URL(ogImage, Astro.site ?? config.site.url);
+// The generated card's size is known; WhatsApp and Facebook render the large
+// preview sooner when they don't have to fetch the image to measure it.
+const isDefaultOgImage = ogImage === config.assets.og_image;
+const gaId = config.analytics.google_analytics_id?.trim();
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+{keywords && <meta name="keywords" content={keywords} />}
+<meta name="author" content={config.seo.author} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+<link rel="canonical" href={canonical.href} />
+
+<meta property="og:site_name" content={config.site.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl.href} />
+<meta property="og:image:alt" content={`${config.site.name} logo`} />
+{
+  isDefaultOgImage && (
+    <>
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+    </>
+  )
+}
+<meta property="og:url" content={canonical.href} />
+<meta property="og:type" content={ogType} />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl.href} />
+
+{/* White matches the header, so the phone's browser bar blends into the page. */}
+<meta name="theme-color" content="#FFFFFF" />
+{/* Icons are generated from the logo by `npm run brand`. */}
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="icon" href="/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+/>
+
+{
+  schema.map((entry) => (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(entry)}
+    />
+  ))
+}
+
+{/* Analytics only loads once a real GA4 ID is set in config.yaml. */}
+{
+  gaId && (
+    <>
+      <script
+        is:inline
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+      />
+      <script is:inline define:vars={{ gaId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', gaId);
+      </script>
+    </>
+  )
+}

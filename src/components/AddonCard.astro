@@ -1,0 +1,25 @@
+---
+import type { Addon } from '../lib/config';
+import { lkr } from '../lib/config';
+import Icon from './Icon.astro';
+
+interface Props {
+  addon: Addon;
+}
+
+const { addon } = Astro.props;
+---
+
+<article class="card-hover flex flex-col">
+  <span
+    class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600"
+  >
+    <Icon name={addon.icon as any} size={24} />
+  </span>
+  <h3 class="text-lg text-ink">{addon.name}</h3>
+  <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">{addon.description}</p>
+  <p class="mt-4 font-display text-base font-bold text-accent-600">
+    {lkr(addon.price)}{' '}
+    {addon.per && <span class="text-sm font-medium text-ink-muted">{addon.per}</span>}
+  </p>
+</article>

@@ -1,0 +1,229 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import PricingCard from '../components/PricingCard.astro';
+import StatBand from '../components/StatBand.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Photo from '../components/Photo.astro';
+import { config, socialLinks, hasRealPhone, lkr } from '../lib/config';
+import galleryData from '../data/gallery.json';
+
+const preview = galleryData.items.filter((item) => item.featured).slice(0, 6);
+
+const prices = config.pricing.packages.map((pkg) => pkg.price);
+// Where the site is actually served (see astro.config.mjs).
+const siteUrl = (Astro.site ?? new URL(config.site.url)).href.replace(/\/$/, '');
+
+// LocalBusiness schema for Google.
+//
+// No aggregateRating, deliberately and permanently: Google does not allow a
+// local business to mark up reviews of itself published on its own site —
+// even genuine ones. Star ratings in search come from the Google Business
+// Profile instead.
+const localBusiness: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: config.site.name,
+  image: new URL(config.assets.og_image, siteUrl).href,
+  logo: new URL(config.assets.logo_png, siteUrl).href,
+  description: config.site.description,
+  url: siteUrl,
+  email: config.contact.email,
+  ...(hasRealPhone() && { telephone: config.contact.phone }),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: config.contact.city,
+    addressRegion: config.contact.region,
+    addressCountry: config.contact.country,
+  },
+  areaServed: 'LK',
+  sameAs: socialLinks().map((link) => link.href),
+  // Package starting prices, cheapest to dearest — follows config.yaml.
+  priceRange: `${lkr(Math.min(...prices))} - ${lkr(Math.max(...prices))}`,
+};
+---
+
+<BaseLayout
+  title="Photo Booth Rental in Colombo"
+  description="Premium automated photo booth rental for weddings, corporate events and parties in Colombo, Sri Lanka. Professional DSLR quality, instant prints and same-day digital delivery."
+  keywords="photo booth rental Colombo, photo booth hire Sri Lanka, wedding photo booth Sri Lanka, event entertainment Colombo"
+  schema={[localBusiness]}
+>
+  {/* ---------------------------------------------------------------- Hero */}
+  <section class="relative isolate overflow-hidden bg-white">
+    {/* Soft pink wash, the only decoration on an otherwise white page. */}
+    <div
+      class="absolute -top-40 -right-40 -z-10 h-[34rem] w-[34rem] rounded-full bg-brand-100 opacity-50 blur-3xl"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div
+      class="container-page grid items-center gap-14 py-20 lg:grid-cols-[1.05fr_1fr] lg:py-28"
+    >
+      <div>
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5 font-display text-xs font-medium tracking-wide text-brand-700"
+        >
+          <Icon name="map-pin" size={14} />
+          {config.contact.city}, Sri Lanka
+        </span>
+
+        <h1 class="mt-7 text-5xl leading-[1.05] text-ink sm:text-6xl lg:text-7xl">
+          Instant memories,<br />
+          <span class="text-brand-500">endless smiles.</span>
+        </h1>
+
+        <p class="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
+          A self-service photo booth for weddings, corporate events and
+          celebrations — professional DSLR quality, prints in seconds, and every
+          photo on your phone the same day.
+        </p>
+
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="/book" class="btn-accent">
+            Book your event
+            <Icon name="arrow" size={18} />
+          </a>
+          <a href="/packages" class="btn-outline">View packages</a>
+        </div>
+
+        <p class="mt-6 text-sm text-ink-muted">{config.booking.promise}</p>
+      </div>
+
+      <div class="relative">
+        {/* Drop src/assets/photos/hero.jpg in to replace the placeholder. */}
+        <Photo
+          name="hero"
+          alt="PhotoPop booth in use at an event"
+          widths={[480, 800, 1100, 1400]}
+          sizes="(min-width: 1024px) 540px, 92vw"
+          loading="eager"
+          fetchpriority="high"
+          class="aspect-[4/5] w-full rounded-3xl object-cover"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* -------------------------------------------------------- How it works */}
+  <section class="container-page py-20">
+    <div class="mx-auto mb-14 max-w-2xl text-center">
+      <p class="eyebrow mb-3">How it works</p>
+      <h2 class="text-3xl text-ink sm:text-4xl">Three steps, zero stress</h2>
+      <p class="mt-4 leading-relaxed text-ink-soft">
+        You pick a date. We handle everything else.
+      </p>
+    </div>
+
+    <ol class="grid gap-6 md:grid-cols-3">
+      {
+        config.how_it_works.map((step) => (
+          <li class="card-hover relative">
+            <span
+              class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-500 text-white"
+              aria-hidden="true"
+            >
+              <Icon name={step.icon as any} size={24} />
+            </span>
+            <span class="absolute top-7 right-7 font-display text-4xl font-extrabold text-slate-100">
+              {step.step}
+            </span>
+            <h3 class="text-xl text-ink">{step.title}</h3>
+            <p class="mt-2 leading-relaxed text-ink-soft">{step.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-10 text-center">
+      <a href="/packages" class="btn-outline">See what's included</a>
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------------ Packages */}
+  <section class="bg-slate-50 py-20">
+    <div class="container-page">
+      <div class="mx-auto mb-14 max-w-2xl text-center">
+        <p class="eyebrow mb-3">Packages</p>
+        <h2 class="text-3xl text-ink sm:text-4xl">A package for every celebration</h2>
+        <p class="mt-4 leading-relaxed text-ink-soft">
+          From a two-hour birthday to a full-day wedding. Every quote is
+          tailored — these are starting points.
+        </p>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {config.pricing.packages.map((pkg) => <PricingCard pkg={pkg} compact />)}
+      </div>
+
+      <div class="mt-10 text-center">
+        <a href="/packages" class="btn-outline">
+          Compare all packages
+          <Icon name="arrow" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------------- Gallery */}
+  <section class="container-page py-20">
+    <div class="mx-auto mb-12 max-w-2xl text-center">
+      <p class="eyebrow mb-3">Gallery</p>
+      <h2 class="text-3xl text-ink sm:text-4xl">See the booth in action</h2>
+      <p class="mt-4 leading-relaxed text-ink-soft">
+        Real prints, real reactions — the kind of photos guests actually keep.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+      {
+        preview.map((item) => (
+          <figure class="group overflow-hidden rounded-xl bg-slate-100">
+            <Photo
+              name={item.photo}
+              alt={item.alt}
+              widths={[320, 640]}
+              sizes="(min-width: 768px) 360px, 46vw"
+              class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105 sm:h-56"
+            />
+          </figure>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="/gallery" class="btn-outline">See more events</a>
+    </div>
+  </section>
+
+  <StatBand />
+  <Testimonials />
+
+  {/* -------------------------------------------------------------- Why us */}
+  <section class="container-page py-20">
+    <div class="mx-auto mb-14 max-w-2xl text-center">
+      <p class="eyebrow mb-3">Why PhotoPop</p>
+      <h2 class="text-3xl text-ink sm:text-4xl">Built for events that matter</h2>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        config.why_us.map((item) => (
+          <div class="card-hover">
+            <span class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent-50 text-accent-600">
+              <Icon name="check-circle" size={22} />
+            </span>
+            <h3 class="text-lg text-ink">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              {item.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
