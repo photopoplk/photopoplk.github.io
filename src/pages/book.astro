@@ -1,0 +1,228 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FaqItem from '../components/FaqItem.astro';
+import Icon from '../components/Icon.astro';
+import {
+  config,
+  googleFormUrl,
+  googleFormEmbedUrl,
+  whatsappLink,
+  hasRealPhone,
+} from '../lib/config';
+
+const embedUrl = googleFormEmbedUrl();
+const formUrl = googleFormUrl();
+const showWhatsApp = hasRealPhone();
+
+// Where the site is actually served (see astro.config.mjs).
+const siteUrl = (Astro.site ?? new URL(config.site.url)).href.replace(/\/$/, '');
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Photo Booth Rental',
+  serviceType: 'Photo booth rental',
+  provider: {
+    '@type': 'LocalBusiness',
+    name: config.site.name,
+    url: siteUrl,
+    email: config.contact.email,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: config.contact.city,
+      addressRegion: config.contact.region,
+      addressCountry: config.contact.country,
+    },
+  },
+  areaServed: 'LK',
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    serviceUrl: `${siteUrl}/book`,
+  },
+};
+
+const sideFaqs = [
+  {
+    q: 'How long until I hear back?',
+    a: `We reply ${config.contact.response_time} during the day, and first thing the next morning for late-night enquiries.`,
+  },
+  {
+    q: 'Am I committing to anything?',
+    a: 'No. This is a quote request. Nothing is booked until you confirm and pay a deposit.',
+  },
+  {
+    q: 'Can I change the package later?',
+    a: 'Yes — up to a week before the event. Upgrading is always possible if the date is still free.',
+  },
+  {
+    q: 'What if my date is already taken?',
+    a: 'We will tell you straight away and suggest the closest alternatives we have open.',
+  },
+];
+---
+
+<BaseLayout
+  title="Book Your Event"
+  description="Request a custom photo booth quote for your wedding, corporate event or party in Sri Lanka. Takes two minutes, no commitment, reply within 2 hours."
+  keywords="book photo booth online, photo booth booking Colombo, get photo booth quote Sri Lanka"
+  schema={[serviceSchema]}
+>
+  <PageHeader
+    eyebrow="Booking"
+    title="Get your custom quote"
+    subtitle="Tell us about your event in two minutes. We will come back with a tailored quote — no obligation."
+  >
+    <ul class="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-2.5">
+      {
+        config.booking.trust_signals.map((signal) => (
+          <li class="flex items-center gap-2 text-sm font-medium text-ink-soft">
+            <Icon name="check-circle" size={17} class="text-brand-500" />
+            {signal}
+          </li>
+        ))
+      }
+    </ul>
+  </PageHeader>
+
+  <section class="container-page py-14">
+    <div class="grid gap-10 lg:grid-cols-[1fr_320px]">
+      {/* -------------------------------------------------------- The form */}
+      <div>
+        {
+          embedUrl ? (
+            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+              <iframe
+                src={embedUrl}
+                title="PhotoPop quote request form"
+                loading="lazy"
+                width="100%"
+                height={config.booking.form_height_px}
+                style={`min-height:${config.booking.form_height_px}px`}
+                class="w-full border-0"
+              >
+                Loading form…
+              </iframe>
+            </div>
+          ) : (
+            /* Shown until booking.google_form_id is filled in — the page must
+               never present an empty frame. See docs/GOOGLE_FORM_SETUP.md. */
+            <div class="rounded-2xl border-2 border-dashed border-brand-200 bg-brand-50 p-8 text-center sm:p-12">
+              <Icon name="mail" size={36} class="mx-auto mb-4 text-brand-500" />
+              <h2 class="text-2xl text-ink">Let's talk about your event</h2>
+              <p class="mx-auto mt-3 max-w-md leading-relaxed text-ink-soft">
+                Send us your event date, venue and rough guest count and we will
+                come back with a tailored quote {config.contact.response_time}.
+              </p>
+
+              <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+                {showWhatsApp && (
+                  <a href={whatsappLink()} target="_blank" rel="noopener" class="btn-accent">
+                    Message us on WhatsApp
+                  </a>
+                )}
+                <a
+                  href={`mailto:${config.contact.bookings_email}?subject=${encodeURIComponent('Photo booth quote request')}&body=${encodeURIComponent(
+                    'Event type:\nEvent date:\nVenue / area:\nGuest count:\nPackage of interest:\nAnything else we should know:\n\nYour name:\nBest number to reach you:'
+                  )}`}
+                  class={showWhatsApp ? 'btn-outline' : 'btn-accent'}
+                >
+                  Email your details
+                </a>
+              </div>
+
+              <p class="mt-6 text-xs text-ink-muted">
+                Site owner: add your Google Form ID to <code>src/config.yaml</code> to
+                replace this panel with the embedded booking form.
+              </p>
+            </div>
+          )
+        }
+
+        {
+          formUrl && (
+            <p class="mt-4 text-center text-sm text-ink-muted">
+              Trouble with the form?{' '}
+              <a
+                href={formUrl}
+                target="_blank"
+                rel="noopener"
+                class="font-semibold text-brand-600 underline underline-offset-2"
+              >
+                Open it in a new tab
+              </a>
+              .
+            </p>
+          )
+        }
+      </div>
+
+      {/* ------------------------------------------------------- Sidebar */}
+      <aside class="space-y-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6">
+          <h2 class="font-display text-lg font-medium text-ink">Prefer to talk?</h2>
+          <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+            Some events are easier to sort out in a conversation. We are happy to
+            do that instead.
+          </p>
+          <div class="mt-5 space-y-2.5 text-sm">
+            {
+              showWhatsApp && (
+                <a
+                  href={whatsappLink()}
+                  target="_blank"
+                  rel="noopener"
+                  class="flex items-center gap-2.5 font-medium text-brand-600 hover:text-brand-700"
+                >
+                  <Icon name="phone" size={17} />
+                  WhatsApp us
+                </a>
+              )
+            }
+            <a
+              href={`mailto:${config.contact.bookings_email}`}
+              class="flex items-center gap-2.5 font-medium text-brand-600 hover:text-brand-700"
+            >
+              <Icon name="mail" size={17} />
+              {config.contact.bookings_email}
+            </a>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white px-6">
+          <h2 class="pt-6 font-display text-lg font-medium text-ink">Good to know</h2>
+          <div class="pb-2">
+            {sideFaqs.map((item) => <FaqItem question={item.q}>{item.a}</FaqItem>)}
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-ink p-6 text-white">
+          <h2 class="font-display text-lg font-medium">What happens next</h2>
+          <ol class="mt-4 space-y-3 text-sm text-white/70">
+            <li class="flex gap-3">
+              <span
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 font-display text-xs font-medium text-white"
+                >1</span
+              >
+              We check your date and confirm availability.
+            </li>
+            <li class="flex gap-3">
+              <span
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 font-display text-xs font-medium text-white"
+                >2</span
+              >
+              You get a written quote with everything itemised.
+            </li>
+            <li class="flex gap-3">
+              <span
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 font-display text-xs font-medium text-white"
+                >3</span
+              >
+              A deposit locks in the date. That's it.
+            </li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

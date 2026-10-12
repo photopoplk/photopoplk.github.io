@@ -1,0 +1,74 @@
+---
+/**
+ * One photo from src/assets/photos, by name.
+ *
+ * Real photos go through Astro's image pipeline: resized to each width in
+ * `widths`, converted to WebP, and served with a srcset so phones download a
+ * phone-sized file. SVG placeholders are passed through untouched.
+ */
+import { Image } from 'astro:assets';
+import { photo, isPlaceholder } from '../lib/photos';
+
+interface Props {
+  /** Path inside src/assets/photos, extension optional — e.g. "gallery/wedding-01". */
+  name: string;
+  alt: string;
+  /** Candidate widths for the srcset. Anything wider than the original is dropped. */
+  widths?: number[];
+  /** How wide the image renders at each breakpoint — drives which width the browser picks. */
+  sizes?: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const {
+  name,
+  alt,
+  widths = [480, 960],
+  sizes = '100vw',
+  class: className,
+  loading = 'lazy',
+  fetchpriority,
+} = Astro.props;
+
+const meta = photo(name);
+const placeholder = isPlaceholder(meta);
+
+// Never upscale: a small source just gets its own width.
+const usable = widths.filter((w) => w <= meta.width);
+const finalWidths = usable.length ? usable : [meta.width];
+// The plain `src` fallback uses the largest srcset width rather than the
+// original — otherwise a 12-megapixel phone photo gets re-encoded at full size
+// on every build for no visitor's benefit.
+const largest = Math.max(...finalWidths);
+---
+
+{
+  placeholder ? (
+    <img
+      src={meta.src}
+      width={meta.width}
+      height={meta.height}
+      alt={alt}
+      class={className}
+      loading={loading}
+      decoding="async"
+      fetchpriority={fetchpriority}
+    />
+  ) : (
+    <Image
+      src={meta}
+      alt={alt}
+      width={largest}
+      widths={finalWidths}
+      sizes={sizes}
+      format="webp"
+      quality={80}
+      class={className}
+      loading={loading}
+      decoding="async"
+      fetchpriority={fetchpriority}
+    />
+  )
+}

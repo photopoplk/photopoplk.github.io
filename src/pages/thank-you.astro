@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { config, whatsappLink, hasRealPhone } from '../lib/config';
+
+const showWhatsApp = hasRealPhone();
+
+const steps = [
+  'We check your date against the calendar and confirm availability.',
+  'You get a written quote with the package and any add-ons itemised.',
+  'Ask us anything — there is no pressure and no obligation.',
+  'A 50% deposit locks in your date.',
+];
+---
+
+<BaseLayout
+  title="Thank You"
+  description="Your quote request has been received. PhotoPop will be in touch shortly."
+  noindex={true}
+>
+  <section class="container-page max-w-2xl py-20 text-center">
+    <span
+      class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-green-600"
+    >
+      <Icon name="check-circle" size={44} strokeWidth={1.6} />
+    </span>
+
+    <h1 class="mt-7 text-4xl text-ink">Thanks for reaching out!</h1>
+    <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+      Your quote request has landed. We will get back to you {
+        config.contact.response_time
+      } — by WhatsApp or email, whichever you gave us.
+    </p>
+
+    <div class="mt-10 rounded-2xl border border-slate-200 bg-white p-7 text-left">
+      <h2 class="font-display text-lg font-medium text-ink">What happens next</h2>
+      <ol class="mt-5 space-y-4">
+        {
+          steps.map((step, i) => (
+            <li class="flex gap-3.5 text-sm leading-relaxed text-ink-soft">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 font-display text-xs font-medium text-white">
+                {i + 1}
+              </span>
+              {step}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="mt-8 rounded-2xl bg-brand-50 p-6">
+      <p class="text-sm leading-relaxed text-ink-soft">
+        Nothing in your inbox after a few hours? Check your spam folder, then
+        give us a nudge — we would rather hear twice than miss you.
+      </p>
+      <div class="mt-4 flex flex-col justify-center gap-3 sm:flex-row">
+        {
+          showWhatsApp && (
+            <a href={whatsappLink()} target="_blank" rel="noopener" class="btn-accent px-6 py-2.5 text-sm">
+              WhatsApp us
+            </a>
+          )
+        }
+        <a
+          href={`mailto:${config.contact.email}`}
+          class="btn-outline px-6 py-2.5 text-sm"
+        >
+          {config.contact.email}
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <p class="text-sm text-ink-muted">In the meantime</p>
+      <div class="mt-4 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/gallery" class="btn-outline">Browse the gallery</a>
+        <a href="/faq" class="btn-outline">Read the FAQ</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

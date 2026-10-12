@@ -1,0 +1,111 @@
+{
+  "_comment": "Gallery entries, shown in this order. \"photo\" is a file in src/assets/photos/ (extension optional; a .jpg beats the .svg placeholder of the same name). \"category\" must be one of the category ids below. \"featured\": true puts it on the home page (first 6 shown). Captions: Event type | Location — no full names, venues or exact dates without the client's OK. See docs/LAUNCH_GUIDE.md.",
+  "categories": [
+    {
+      "id": "all",
+      "label": "All"
+    },
+    {
+      "id": "weddings",
+      "label": "Weddings"
+    },
+    {
+      "id": "corporate",
+      "label": "Corporate"
+    },
+    {
+      "id": "birthdays",
+      "label": "Birthdays"
+    },
+    {
+      "id": "festivals",
+      "label": "Festivals"
+    }
+  ],
+  "items": [
+    {
+      "photo": "gallery/wedding-01",
+      "alt": "Placeholder for a couple posing together at the PhotoPop booth",
+      "category": "weddings",
+      "caption": "Wedding | Colombo",
+      "featured": true
+    },
+    {
+      "photo": "gallery/wedding-02",
+      "alt": "Placeholder for a bridal party portrait taken in the booth",
+      "category": "weddings",
+      "caption": "Wedding | Bridal party",
+      "featured": true
+    },
+    {
+      "photo": "gallery/wedding-03",
+      "alt": "Placeholder for a wide shot of the booth set up at a wedding venue",
+      "category": "weddings",
+      "caption": "Wedding | Booth setup",
+      "featured": false
+    },
+    {
+      "photo": "gallery/corporate-01",
+      "alt": "Placeholder for guests at a corporate product launch using the booth",
+      "category": "corporate",
+      "caption": "Product launch | Colombo",
+      "featured": true
+    },
+    {
+      "photo": "gallery/corporate-02",
+      "alt": "Placeholder for a print showing a custom branded overlay",
+      "category": "corporate",
+      "caption": "Corporate | Branded overlay",
+      "featured": true
+    },
+    {
+      "photo": "gallery/corporate-03",
+      "alt": "Placeholder for a conference attendee portrait",
+      "category": "corporate",
+      "caption": "Conference | Colombo",
+      "featured": false
+    },
+    {
+      "photo": "gallery/birthday-01",
+      "alt": "Placeholder for a birthday cake moment captured in the booth",
+      "category": "birthdays",
+      "caption": "Birthday | Cake moment",
+      "featured": true
+    },
+    {
+      "photo": "gallery/birthday-02",
+      "alt": "Placeholder for friends posing with props",
+      "category": "birthdays",
+      "caption": "Birthday | Props",
+      "featured": true
+    },
+    {
+      "photo": "gallery/birthday-03",
+      "alt": "Placeholder for a group holding their freshly printed photos",
+      "category": "birthdays",
+      "caption": "Birthday | Instant prints",
+      "featured": false
+    },
+    {
+      "photo": "gallery/festival-01",
+      "alt": "Placeholder for a crowd at a public festival event",
+      "category": "festivals",
+      "caption": "Festival | Public event",
+      "featured": false
+    },
+    {
+      "photo": "gallery/festival-02",
+      "alt": "Placeholder for a queue at the booth during a festival",
+      "category": "festivals",
+      "caption": "Festival | Colombo",
+      "featured": false
+    },
+    {
+      "photo": "gallery/festival-03",
+      "alt": "Placeholder for a close-up of a printed photo strip",
+      "category": "festivals",
+      "caption": "Festival | Print strip",
+      "featured": false
+    }
+  ]
+}

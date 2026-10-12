@@ -1,0 +1,82 @@
+# Builds the site on every push, and publishes it to GitHub Pages from main.
+#
+#   develop  -> build only. A green tick means the site builds cleanly.
+#   main     -> build, then deploy to https://photopoplk.github.io
+#               (or your custom domain, once one is set in Settings -> Pages)
+#
+# One-time setup, before the first merge into main:
+#   Settings -> Pages -> Build and deployment -> Source: "GitHub Actions"
+# Full steps: docs/LAUNCH_GUIDE.md, Part 3.
+
+name: Build and deploy
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [main]
+  # Adds a "Run workflow" button on the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: build-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Asks GitHub where the site is served, so canonical links, the sitemap
+      # and link-preview images point there. Picks up a custom domain
+      # automatically once one is configured.
+      - name: Read the live site address
+        id: pages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/configure-pages@v6
+
+      - name: Build
+        run: npm run build
+        env:
+          # Empty on develop builds — astro.config.mjs then uses photopop.lk.
+          SITE_URL: ${{ steps.pages.outputs.base_url }}
+
+      - name: Upload site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # Never cancel a deployment halfway; queue the next one instead.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

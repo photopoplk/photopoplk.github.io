@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import { getImage } from 'astro:assets';
+import { config, instagramUrl } from '../lib/config';
+import { photo, isPlaceholder } from '../lib/photos';
+import galleryData from '../data/gallery.json';
+
+const { categories, items } = galleryData;
+const countFor = (id: string) =>
+  id === 'all' ? items.length : items.filter((i) => i.category === id).length;
+
+/** One large WebP per photo for the lightbox, so it never loads the original. */
+const lightboxSrc = await Promise.all(
+  items.map(async (item) => {
+    const meta = photo(item.photo);
+    if (isPlaceholder(meta)) return meta.src;
+    const large = await getImage({
+      src: meta,
+      width: Math.min(1600, meta.width),
+      format: 'webp',
+      quality: 82,
+    });
+    return large.src;
+  })
+);
+---
+
+<BaseLayout
+  title="Gallery"
+  description="Photo booth gallery from PhotoPop — weddings, corporate events, birthdays and festivals across Colombo and Sri Lanka."
+  keywords="photo booth gallery Colombo, wedding photo booth examples, event entertainment samples Sri Lanka"
+>
+  <PageHeader
+    eyebrow="Gallery"
+    title="Our events gallery"
+    subtitle="A look at the booth, the prints and the kind of photos guests actually keep."
+  />
+
+  <section class="container-page py-14">
+    {/* ------------------------------------------------------------ Filters */}
+    <div
+      class="mb-10 flex flex-wrap justify-center gap-2"
+      role="group"
+      aria-label="Filter gallery by event type"
+    >
+      {/* Active state is driven entirely by aria-pressed, so the accessible
+          state and the visual state can never drift apart. */}
+      {
+        categories.map((cat, i) => (
+          <button
+            type="button"
+            data-filter={cat.id}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            class="filter-pill"
+          >
+            {cat.label}
+            <span class="ml-1.5 text-xs opacity-60">{countFor(cat.id)}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <p class="sr-only" role="status" id="filter-status">
+      Showing all {items.length} photos
+    </p>
+
+    {/* ------------------------------------------------------------ Masonry */}
+    <div id="gallery-grid" class="gap-4 space-y-4 sm:columns-2 lg:columns-3">
+      {
+        items.map((item, index) => (
+          <figure
+            data-category={item.category}
+            class="group mb-4 break-inside-avoid overflow-hidden rounded-xl bg-slate-100"
+          >
+            <button
+              type="button"
+              class="relative block w-full cursor-zoom-in text-left"
+              data-lightbox-open
+              data-full={lightboxSrc[index]}
+              data-alt={item.alt}
+              data-caption={item.caption}
+              aria-label={`View larger: ${item.caption}`}
+            >
+              <Photo
+                name={item.photo}
+                alt={item.alt}
+                widths={[400, 700, 1000]}
+                sizes="(min-width: 1024px) 360px, (min-width: 640px) 46vw, 92vw"
+                class="h-auto w-full transition-transform duration-300 group-hover:scale-105"
+              />
+              <span class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-10 text-sm font-medium text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                {item.caption}
+              </span>
+            </button>
+          </figure>
+        ))
+      }
+    </div>
+
+    <p id="gallery-empty" class="hidden py-16 text-center text-ink-muted">
+      No photos in this category yet — check back soon.
+    </p>
+  </section>
+
+  {/* --------------------------------------------------------------- Social */}
+  {/* Hidden while social.instagram is blank in config.yaml. */}
+  {
+    config.social.instagram?.trim() && (
+      <section class="bg-slate-50 py-16">
+        <div class="container-page text-center">
+          <Icon name="camera" size={32} class="mx-auto mb-4 text-brand-500" />
+          <h2 class="text-2xl text-ink sm:text-3xl">More on Instagram</h2>
+          <p class="mx-auto mt-3 max-w-lg leading-relaxed text-ink-soft">
+            We post prints, setups and behind-the-scenes from every event.
+          </p>
+          <a href={instagramUrl()} target="_blank" rel="noopener" class="btn-outline mt-6">
+            Follow @{config.social.instagram}
+          </a>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaSection
+    title="Love what you see?"
+    subtitle="Tell us about your event and we will put together a quote."
+  />
+
+  {/* ------------------------------------------------------------ Lightbox */}
+  <dialog
+    id="lightbox"
+    class="m-auto max-w-[92vw] rounded-2xl bg-transparent p-0 backdrop:bg-black/80 backdrop:backdrop-blur-sm"
+  >
+    <div class="relative">
+      {/* No src until a photo is opened — an empty src is invalid HTML. */}
+      <img id="lightbox-image" alt="" class="max-h-[80vh] w-auto rounded-2xl" />
+      <p
+        id="lightbox-caption"
+        class="mt-3 text-center font-display text-sm font-semibold text-white"
+      >
+      </p>
+      <button
+        type="button"
+        id="lightbox-close"
+        class="absolute -top-3 -right-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink shadow-lg hover:bg-slate-100"
+        aria-label="Close"
+      >
+        <Icon name="x" size={20} strokeWidth={2} />
+      </button>
+    </div>
+  </dialog>
+</BaseLayout>
+
+<script>
+  const grid = document.getElementById('gallery-grid');
+  const empty = document.getElementById('gallery-empty');
+  const status = document.getElementById('filter-status');
+  const buttons =
+    document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const figures = grid?.querySelectorAll<HTMLElement>('[data-category]') ?? [];
+
+  // --- Filtering ----------------------------------------------------------
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+
+      // Styling follows from aria-pressed via CSS — nothing else to toggle.
+      buttons.forEach((other) => {
+        other.setAttribute('aria-pressed', String(other === button));
+      });
+
+      let shown = 0;
+      figures.forEach((figure) => {
+        const match = filter === 'all' || figure.dataset.category === filter;
+        figure.classList.toggle('hidden', !match);
+        if (match) shown += 1;
+      });
+
+      empty?.classList.toggle('hidden', shown > 0);
+      if (status) {
+        status.textContent = `Showing ${shown} photo${shown === 1 ? '' : 's'}`;
+      }
+    });
+  });
+
+  // --- Lightbox -----------------------------------------------------------
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+  const image = document.getElementById('lightbox-image') as HTMLImageElement | null;
+  const caption = document.getElementById('lightbox-caption');
+  const close = document.getElementById('lightbox-close');
+
+  // Each trigger carries its own optimised large-image URL, built at compile
+  // time — the page never ships the raw gallery data or the original files.
+  document.querySelectorAll<HTMLButtonElement>('[data-lightbox-open]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const { full, alt, caption: text } = trigger.dataset;
+      if (!dialog || !image || !full) return;
+
+      image.src = full;
+      image.alt = alt ?? '';
+      if (caption) caption.textContent = text ?? '';
+      dialog.showModal();
+    });
+  });
+
+  close?.addEventListener('click', () => dialog?.close());
+
+  // Clicking the backdrop (i.e. the dialog element itself) closes it.
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+</script>

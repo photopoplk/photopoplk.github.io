@@ -1,0 +1,107 @@
+---
+import { config, whatsappLink, telLink, hasRealPhone, socialLinks } from '../lib/config';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+const showPhone = hasRealPhone();
+const socials = socialLinks();
+---
+
+<footer class="mt-24 bg-ink text-white/65">
+  <div class="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <h2 class="mb-4 font-display text-lg font-medium text-white">Explore</h2>
+      <ul class="space-y-2.5 text-sm">
+        <li><a href="/" class="hover:text-white">Home</a></li>
+        <li><a href="/packages" class="hover:text-white">Packages</a></li>
+        <li><a href="/gallery" class="hover:text-white">Gallery</a></li>
+        <li><a href="/book" class="hover:text-white">Get a Quote</a></li>
+        <li><a href="/faq" class="hover:text-white">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="mb-4 font-display text-lg font-medium text-white">Company</h2>
+      <ul class="space-y-2.5 text-sm">
+        <li><a href="/about" class="hover:text-white">About PhotoPop</a></li>
+        <li><a href="/terms" class="hover:text-white">Terms &amp; Conditions</a></li>
+        <li><a href="/privacy" class="hover:text-white">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="mb-4 font-display text-lg font-medium text-white">Contact</h2>
+      <ul class="space-y-3 text-sm">
+        <li>
+          <a href={`mailto:${config.contact.email}`} class="flex items-center gap-2.5 hover:text-white">
+            <Icon name="mail" size={17} class="shrink-0 text-brand-400" />
+            {config.contact.email}
+          </a>
+        </li>
+        {
+          showPhone && (
+            <li>
+              <a href={telLink()} class="flex items-center gap-2.5 hover:text-white">
+                <Icon name="phone" size={17} class="shrink-0 text-brand-400" />
+                {config.contact.phone}
+              </a>
+            </li>
+          )
+        }
+        {
+          showPhone && (
+            <li>
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener"
+                class="flex items-center gap-2.5 hover:text-white"
+              >
+                <Icon name="phone" size={17} class="shrink-0 text-brand-400" />
+                WhatsApp us
+              </a>
+            </li>
+          )
+        }
+        <li class="flex items-center gap-2.5">
+          <Icon name="map-pin" size={17} class="shrink-0 text-brand-400" />
+          {config.contact.city}, Sri Lanka
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      {
+        socials.length > 0 && (
+          <>
+            <h2 class="mb-4 font-display text-lg font-medium text-white">Follow</h2>
+            <ul class="mb-6 space-y-2.5 text-sm">
+              {socials.map((social) => (
+                <li>
+                  <a href={social.href} target="_blank" rel="noopener" class="hover:text-white">
+                    {social.label} <span class="text-white/50">{social.handle}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+      <a href="/book" class="btn-accent w-full px-5 py-2.5 text-sm">
+        Get a Quote
+        <Icon name="arrow" size={16} />
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div
+      class="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs sm:flex-row"
+    >
+      <p>&copy; {year} {config.site.name}. All rights reserved.</p>
+      <p class="text-white/50">
+        Photo booth rental in {config.contact.city}, Sri Lanka.
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,70 @@
+---
+import type { Package } from '../lib/config';
+import { lkr } from '../lib/config';
+import Icon from './Icon.astro';
+
+interface Props {
+  pkg: Package;
+  /** Home page shows a trimmed card; /packages shows the full feature list. */
+  compact?: boolean;
+}
+
+const { pkg, compact = false } = Astro.props;
+const features = compact ? pkg.features.slice(0, 4) : pkg.features;
+---
+
+<article
+  class:list={[
+    'relative flex flex-col rounded-2xl border p-7 transition-colors duration-200',
+    pkg.featured
+      ? 'border-brand-300 bg-brand-50/60'
+      : 'border-slate-200 bg-white hover:border-brand-300',
+  ]}
+>
+  {
+    pkg.featured && (
+      <span class="absolute -top-2.5 left-7 rounded-full bg-brand-600 px-3 py-0.5 font-display text-[0.7rem] font-medium tracking-wide text-white">
+        Most popular
+      </span>
+    )
+  }
+
+  <h3 class="text-xl text-ink">{pkg.name}</h3>
+  <p class="mt-1 text-sm text-ink-muted">{pkg.tagline}</p>
+
+  {/* "from" sits on its own line so the figure never wraps in a narrow
+      column — and the price stays a floor, never an exact total. */}
+  <div class="mt-6 mb-6">
+    <p class="text-xs tracking-wide text-ink-muted">from</p>
+    <p class="mt-0.5 font-display text-3xl font-medium tracking-tight text-ink">
+      {lkr(pkg.price)}
+    </p>
+    <p class="mt-1.5 text-sm text-ink-muted">{pkg.duration}</p>
+  </div>
+
+  <ul class="mb-8 flex-1 space-y-3 text-sm text-ink-soft">
+    {
+      features.map((feature) => (
+        <li class="flex gap-2.5">
+          <Icon name="check" size={16} class="mt-0.5 shrink-0 text-brand-500" strokeWidth={2.2} />
+          <span>{feature}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a
+    href={`/book?package=${pkg.id}`}
+    class:list={[pkg.featured ? 'btn-accent' : 'btn-outline', 'w-full']}
+  >
+    Get a Quote
+  </a>
+
+  {
+    !compact && (
+      <p class="mt-4 text-center text-xs text-ink-muted">
+        Best for: {pkg.target_audience}
+      </p>
+    )
+  }
+</article>

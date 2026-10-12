@@ -1,0 +1,29 @@
+# build output
+dist/
+# phone preview bundle (npm run preview:bundle)
+preview/
+# generated types
+.astro/
+
+# local Claude Code / editor tooling
+.claude/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/

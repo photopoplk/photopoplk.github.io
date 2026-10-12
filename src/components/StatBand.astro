@@ -1,0 +1,61 @@
+---
+/**
+ * Social proof band.
+ *
+ * While `launch.pre_launch` is true this renders the founding-client offer
+ * instead of event counters — PhotoPop has not run events yet, and inventing
+ * numbers here would be a lie the whole site rests on. Fill in `metrics` and
+ * flip the flag once the counts are real.
+ */
+import { config, showMetrics } from '../lib/config';
+import Icon from './Icon.astro';
+
+const real = showMetrics();
+const m = config.metrics;
+
+const stats = [
+  { value: `${m.events_completed}+`, label: 'Events completed' },
+  { value: `${m.happy_guests.toLocaleString('en-US')}+`, label: 'Happy guests' },
+  { value: `${m.photos_printed.toLocaleString('en-US')}+`, label: 'Photos printed' },
+  { value: `${m.reviews_5star}`, label: 'Five-star reviews' },
+];
+---
+
+<section class="bg-brand-50">
+  <div class="container-page py-16 sm:py-20">
+    {
+      real ? (
+        <dl class="grid grid-cols-2 gap-10 text-center lg:grid-cols-4">
+          {stats.map((stat) => (
+            <div>
+              <dt class="sr-only">{stat.label}</dt>
+              <dd>
+                <span class="block font-display text-4xl font-medium tracking-tight text-brand-600 sm:text-5xl">
+                  {stat.value}
+                </span>
+                <span class="mt-2 block text-sm text-ink-soft">{stat.label}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      ) : (
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-1.5 font-display text-xs font-medium tracking-wide text-brand-700">
+            <Icon name="bolt" size={14} />
+            {config.launch.launch_label}
+          </span>
+          <h2 class="mt-6 text-3xl text-ink sm:text-4xl">
+            {config.launch.founding_offer}
+          </h2>
+          <p class="mx-auto mt-4 max-w-xl leading-relaxed text-ink-soft">
+            {config.launch.founding_offer_detail}
+          </p>
+          <a href="/book" class="btn-accent mt-8">
+            Claim founding-client pricing
+            <Icon name="arrow" size={18} />
+          </a>
+        </div>
+      )
+    }
+  </div>
+</section>
