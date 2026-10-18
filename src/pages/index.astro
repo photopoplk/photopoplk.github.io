@@ -10,6 +10,9 @@ import { config, socialLinks, hasRealPhone, lkr } from '../lib/config';
 import galleryData from '../data/gallery.json';
 
 const preview = galleryData.items.filter((item) => item.featured).slice(0, 6);
+// While the gallery holds illustrations rather than real event photos, say so
+// instead of presenting them as past work (see "illustrative" in gallery.json).
+const illustrative = galleryData.illustrative === true;
 
 const prices = config.pricing.packages.map((pkg) => pkg.price);
 // Where the site is actually served (see astro.config.mjs).
@@ -96,7 +99,11 @@ const localBusiness: Record<string, unknown> = {
         {/* Drop src/assets/photos/hero.jpg in to replace the placeholder. */}
         <Photo
           name="hero"
-          alt="PhotoPop booth in use at an event"
+          alt={
+            illustrative
+              ? 'Illustration: a guest in a blush dress collects a fresh photo strip from a white photo booth at a wedding reception'
+              : 'A guest collecting a fresh photo strip from the PhotoPop booth at a wedding reception'
+          }
           widths={[480, 800, 1100, 1400]}
           sizes="(min-width: 1024px) 540px, 92vw"
           loading="eager"
@@ -170,11 +177,26 @@ const localBusiness: Record<string, unknown> = {
   {/* ------------------------------------------------------------- Gallery */}
   <section class="container-page py-20">
     <div class="mx-auto mb-12 max-w-2xl text-center">
-      <p class="eyebrow mb-3">Gallery</p>
-      <h2 class="text-3xl text-ink sm:text-4xl">See the booth in action</h2>
-      <p class="mt-4 leading-relaxed text-ink-soft">
-        Real prints, real reactions — the kind of photos guests actually keep.
-      </p>
+      {
+        illustrative ? (
+          <>
+            <p class="eyebrow mb-3">The experience</p>
+            <h2 class="text-3xl text-ink sm:text-4xl">What your event could look like</h2>
+            <p class="mt-4 leading-relaxed text-ink-soft">
+              Illustrative images of the PhotoPop experience. Photos from our own
+              events will take their place after our first bookings.
+            </p>
+          </>
+        ) : (
+          <>
+            <p class="eyebrow mb-3">Gallery</p>
+            <h2 class="text-3xl text-ink sm:text-4xl">See the booth in action</h2>
+            <p class="mt-4 leading-relaxed text-ink-soft">
+              Real prints, real reactions — the kind of photos guests actually keep.
+            </p>
+          </>
+        )
+      }
     </div>
 
     <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -194,7 +216,9 @@ const localBusiness: Record<string, unknown> = {
     </div>
 
     <div class="mt-10 text-center">
-      <a href="/gallery" class="btn-outline">See more events</a>
+      <a href="/gallery" class="btn-outline">
+        {illustrative ? 'See the full gallery' : 'See more events'}
+      </a>
     </div>
   </section>
 

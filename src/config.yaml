@@ -143,7 +143,6 @@ pricing:
         - "Unlimited 4x6 prints on the spot"
         - "Premium backdrop options"
         - "Branded photo overlay"
-        - "Optional live photo display screen"
         - "Online gallery link for all guests"
     - id: "platinum"
       name: "Platinum"
@@ -156,7 +155,6 @@ pricing:
         - "Everything in Gold"
         - "Fully custom branded overlay"
         - "Premium + custom backdrop"
-        - "Digital guest book"
         - "Dedicated booth attendant"
         - "Priority scheduling"
     - id: "diamond"
@@ -168,9 +166,7 @@ pricing:
       featured: false
       features:
         - "Everything in Platinum"
-        - "Dual booth setup"
         - "Complete custom branding suite"
-        - "Live social media display"
         - "Dedicated attendant + assistant"
         - "USB drive with all high-res photos"
 
@@ -212,26 +208,11 @@ comparison:
     gold: "Standard"
     platinum: "Custom"
     diamond: "Full suite"
-  - feature: "Live photo display screen"
-    silver: false
-    gold: "Optional"
-    platinum: true
-    diamond: true
-  - feature: "Digital guest book"
-    silver: false
-    gold: false
-    platinum: true
-    diamond: true
   - feature: "Dedicated booth attendant"
     silver: false
     gold: false
     platinum: true
     diamond: "+ assistant"
-  - feature: "Dual booth setup"
-    silver: false
-    gold: false
-    platinum: false
-    diamond: true
   - feature: "USB drive with high-res photos"
     silver: false
     gold: false
@@ -252,18 +233,6 @@ addons:
     price: 7500
     per: "per hour"
     icon: "clock"
-  - name: "360 Video Booth"
-    description: "An immersive 360-degree slow-motion video station — the reel your guests will actually post."
-    price: 15000
-    icon: "video"
-  - name: "Digital Guest Book"
-    description: "Video messages and signed photos compiled into a keepsake album."
-    price: 5000
-    icon: "book"
-  - name: "Live Social Display"
-    description: "Photos appear on a big screen in real time as guests shoot them."
-    price: 8000
-    icon: "tv"
 
 # --- Content blocks ---------------------------------------------------------
 how_it_works:

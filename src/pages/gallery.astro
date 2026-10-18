@@ -10,6 +10,9 @@ import { photo, isPlaceholder } from '../lib/photos';
 import galleryData from '../data/gallery.json';
 
 const { categories, items } = galleryData;
+// While the gallery holds illustrations rather than real event photos, say so
+// instead of presenting them as past work (see "illustrative" in gallery.json).
+const illustrative = galleryData.illustrative === true;
 const countFor = (id: string) =>
   id === 'all' ? items.length : items.filter((i) => i.category === id).length;
 
@@ -31,13 +34,17 @@ const lightboxSrc = await Promise.all(
 
 <BaseLayout
   title="Gallery"
-  description="Photo booth gallery from PhotoPop — weddings, corporate events, birthdays and festivals across Colombo and Sri Lanka."
+  description="What a PhotoPop photo booth brings to weddings, corporate events, birthdays and festivals in Colombo and across Sri Lanka."
   keywords="photo booth gallery Colombo, wedding photo booth examples, event entertainment samples Sri Lanka"
 >
   <PageHeader
     eyebrow="Gallery"
-    title="Our events gallery"
-    subtitle="A look at the booth, the prints and the kind of photos guests actually keep."
+    title={illustrative ? 'The PhotoPop experience' : 'Our events gallery'}
+    subtitle={
+      illustrative
+        ? 'Illustrative images of what the booth brings to an event. Real photos from our events will replace them after our first bookings.'
+        : 'A look at the booth, the prints and the kind of photos guests actually keep.'
+    }
   />
 
   <section class="container-page py-14">
