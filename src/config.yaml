@@ -310,7 +310,7 @@ seo:
   author: "PhotoPop"
 
 analytics:
-  google_analytics_id: ""            # TODO (optional): "G-XXXXXXXXXX"
+  google_analytics_id: "G-S2PCWHFJT1"            # TODO (optional): "G-XXXXXXXXXX"
 
 # Generated from brand/photopop-logo.png by `npm run brand` — do not edit by hand.
 assets:
