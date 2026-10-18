@@ -9,11 +9,7 @@ Everything between "the site is built" and "photopop.lk is live", in order.
 | [3](#part-3--publishing-with-github-pages) | Publish, then connect photopop.lk | 15 min to go live; 1–2 hours for the domain and email |
 | [4](#part-4--after-your-first-events) | After your first events | 10 min |
 
-All commands run from the `photopop-site` folder:
-
-```bash
-cd PhotoPop_v1.0/03_Website/photopop-site
-```
+All commands run from the website's folder — the one containing `package.json`. In VS Code, **Terminal → New Terminal** opens a terminal there.
 
 ---
 
@@ -281,7 +277,7 @@ For star ratings in Google itself, collect reviews on your **Google Business Pro
 
 ### When you're ready to introduce yourselves
 
-The About page has a founders' section, switched off. **Your names aren't in the repository at all** — they're kept in a private file, `team_section_PRIVATE.md`, in the `03_Website` folder *next to* `photopop-site`, which is never pushed.
+The About page has a founders' section, switched off. **Your names aren't in the repository at all** — they're kept in a private file, `team_section_PRIVATE.md`, stored outside this repository so it's never pushed.
 
 To turn it on:
 
