@@ -54,7 +54,7 @@ social:
 # in `metrics` + `testimonials` once you have real events and real reviews.
 launch:
   pre_launch: true
-  launch_label: "Launching 2026"
+  launch_label: "Launching 2026 November"
   founding_offer: "Founding-client rates for our first 10 bookings"
   founding_offer_detail: "Be one of our first events and lock in launch pricing — plus a free custom branded photo overlay."
 
