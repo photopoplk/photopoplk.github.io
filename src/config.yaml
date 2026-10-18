@@ -28,10 +28,10 @@ site:
   founded_year: 2026
 
 contact:
-  email: "hello@photopop.lk"         # TODO: must receive mail before launch
-  bookings_email: "bookings@photopop.lk"  # TODO: same — or set to the hello@ address
-  phone: "+94XXXXXXXXX"              # TODO: real number, country code, no spaces
-  whatsapp: "+94XXXXXXXXX"           # TODO: usually the same number
+  email: "photopoplk@gmail.com"         # TODO: must receive mail before launch
+  bookings_email: "photopoplk@gmail.com"  # TODO: same — or set to the hello@ address
+  phone: "+94768856116"              # TODO: real number, country code, no spaces
+  whatsapp: "+94768856116"           # TODO: usually the same number
   whatsapp_preset: "Hi PhotoPop, I'd like to book your photo booth for my event!"
   city: "Colombo"
   region: "Western Province"
@@ -42,9 +42,9 @@ contact:
 # Handles only — no @ and no URL. Leave a value blank ("") to hide that
 # platform everywhere on the site until the account exists.
 social:
-  instagram: "photopoplk"
-  facebook: "PhotoPopLK"
-  tiktok: "photopoplk"
+  instagram: ""
+  facebook: ""
+  tiktok: ""
   youtube: ""
   linkedin: ""
 
@@ -54,7 +54,7 @@ social:
 # in `metrics` + `testimonials` once you have real events and real reviews.
 launch:
   pre_launch: true
-  launch_label: "Launching 2026"
+  launch_label: "Launching 2026 November"
   founding_offer: "Founding-client rates for our first 10 bookings"
   founding_offer_detail: "Be one of our first events and lock in launch pricing — plus a free custom branded photo overlay."
 
@@ -101,7 +101,7 @@ booking:
   # TODO: paste the ID from your Google Form's embed URL.
   # See docs/GOOGLE_FORM_SETUP.md. Until this is set, /book shows a
   # WhatsApp + email fallback panel instead of the embedded form.
-  google_form_id: ""
+  google_form_id: "1FAIpQLSfMgknkgPbEcB-Bchv7f9vlcMrBWbhpUY7h3SSfNKL5zqn0ug"
   form_height_px: 1500
   promise: "No commitment. We reply within 2 hours."
   trust_signals:
@@ -310,7 +310,7 @@ seo:
   author: "PhotoPop"
 
 analytics:
-  google_analytics_id: ""            # TODO (optional): "G-XXXXXXXXXX"
+  google_analytics_id: "G-S2PCWHFJT1"            # TODO (optional): "G-XXXXXXXXXX"
 
 # Generated from brand/photopop-logo.png by `npm run brand` — do not edit by hand.
 assets:
