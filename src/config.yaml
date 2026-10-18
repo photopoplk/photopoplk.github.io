@@ -28,10 +28,10 @@ site:
   founded_year: 2026
 
 contact:
-  email: "hello@photopop.lk"         # TODO: must receive mail before launch
-  bookings_email: "bookings@photopop.lk"  # TODO: same — or set to the hello@ address
-  phone: "+94XXXXXXXXX"              # TODO: real number, country code, no spaces
-  whatsapp: "+94XXXXXXXXX"           # TODO: usually the same number
+  email: "photopoplk@gmail.com"         # TODO: must receive mail before launch
+  bookings_email: "photopoplk@gmail.com"  # TODO: same — or set to the hello@ address
+  phone: "+94768856116"              # TODO: real number, country code, no spaces
+  whatsapp: "+94768856116"           # TODO: usually the same number
   whatsapp_preset: "Hi PhotoPop, I'd like to book your photo booth for my event!"
   city: "Colombo"
   region: "Western Province"
