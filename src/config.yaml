@@ -42,9 +42,9 @@ contact:
 # Handles only — no @ and no URL. Leave a value blank ("") to hide that
 # platform everywhere on the site until the account exists.
 social:
-  instagram: "photopoplk"
-  facebook: "PhotoPopLK"
-  tiktok: "photopoplk"
+  instagram: ""
+  facebook: ""
+  tiktok: ""
   youtube: ""
   linkedin: ""
 
