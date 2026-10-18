@@ -101,7 +101,7 @@ booking:
   # TODO: paste the ID from your Google Form's embed URL.
   # See docs/GOOGLE_FORM_SETUP.md. Until this is set, /book shows a
   # WhatsApp + email fallback panel instead of the embedded form.
-  google_form_id: ""
+  google_form_id: "1FAIpQLSfMgknkgPbEcB-Bchv7f9vlcMrBWbhpUY7h3SSfNKL5zqn0ug"
   form_height_px: 1500
   promise: "No commitment. We reply within 2 hours."
   trust_signals:
