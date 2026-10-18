@@ -33,7 +33,7 @@ page promises, so keep the wording close.
 | # | Question | Type | Required | Options / notes |
 |---|----------|------|----------|-----------------|
 | 5 | Which package interests you? | Multiple choice | No | Silver (2 hrs) · Gold (3 hrs) · Platinum (4 hrs) · Diamond (full day) · Not sure yet |
-| 6 | Any add-ons? | Checkboxes | No | Custom branding · Premium backdrop · Extended hours · 360 video booth · Digital guest book · Live social display |
+| 6 | Any add-ons? | Checkboxes | No | Custom branding · Premium backdrop · Extended hours |
 | 7 | Anything else we should know? | Paragraph | No | e.g. outdoor venue, specific colours, tight setup window |
 
 ### Section 3 — How to Reach You

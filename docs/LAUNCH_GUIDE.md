@@ -136,15 +136,30 @@ If an entry names a file that doesn't exist, the build stops and lists the files
 - **Captions:** event type and town only. No full names, venue names or exact dates unless the client has said yes.
 - Not sure about consent for a face? Don't use it. There are always other shots.
 
-### Changing the logo
+### Changing the logo or icon
 
-The master logo is `brand/photopop-logo.png`. If it ever changes, replace that file (keep the white background) and run:
+Two master files live in `brand/`:
+
+| File | What it is |
+|---|---|
+| `photopop-logo.png` | The full logo, transparent background |
+| `favicon.png` | The square app-icon design, 512 × 512 |
+
+If either changes, replace the file (same name) and run:
 
 ```bash
 npm run brand
 ```
 
-That regenerates the header logo, the link-preview card, and all the icons from the one file.
+```bash
+npm run photos:clean
+```
+
+The first regenerates the header logo, the link-preview card and every icon size. The second strips hidden metadata from the new master before you commit it.
+
+### Illustrative photos
+
+The current photos are AI-generated illustrations, not photos from real PhotoPop events. While `"illustrative": true` is set in `src/data/gallery.json`, the home page and gallery say so ("What your event could look like…") instead of presenting them as past work. When your own event photos replace them, set it to `false` and the original wording returns.
 
 ---
 

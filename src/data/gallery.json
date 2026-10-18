@@ -1,5 +1,7 @@
 {
-  "_comment": "Gallery entries, shown in this order. \"photo\" is a file in src/assets/photos/ (extension optional; a .jpg beats the .svg placeholder of the same name). \"category\" must be one of the category ids below. \"featured\": true puts it on the home page (first 6 shown). Captions: Event type | Location — no full names, venues or exact dates without the client's OK. See docs/LAUNCH_GUIDE.md.",
+  "_comment": "Gallery entries, shown in this order. \"photo\" is a file in src/assets/photos/ (extension optional; a .jpg beats the .svg placeholder of the same name). \"category\" must be one of the category ids below. \"featured\": true puts it on the home page (first 6 shown). \"alt\" describes what the photo actually shows. Captions: Event type · moment — no full names, venues or exact dates without the client's OK. See docs/LAUNCH_GUIDE.md.",
+  "_illustrative": "true while these are AI-generated illustrations rather than photos from real PhotoPop events: the site then labels them as illustrative instead of presenting them as past work. Set to false once real event photos replace them.",
+  "illustrative": true,
   "categories": [
     {
       "id": "all",
@@ -25,86 +27,86 @@
   "items": [
     {
       "photo": "gallery/wedding-01",
-      "alt": "Placeholder for a couple posing together at the PhotoPop booth",
+      "alt": "A bride and groom's hands holding a fresh three-frame photo strip, with white and pink roses behind them",
       "category": "weddings",
-      "caption": "Wedding | Colombo",
+      "caption": "Wedding · Prints in hand",
       "featured": true
     },
     {
       "photo": "gallery/wedding-02",
-      "alt": "Placeholder for a bridal party portrait taken in the booth",
+      "alt": "A laughing bridal party in blush dresses and navy suits posing with heart-shaped props in front of a pink rose wall",
       "category": "weddings",
-      "caption": "Wedding | Bridal party",
+      "caption": "Wedding · The flower wall",
       "featured": true
     },
     {
       "photo": "gallery/wedding-03",
-      "alt": "Placeholder for a wide shot of the booth set up at a wedding venue",
+      "alt": "Guests queuing at a photo booth framed by a white and blush floral arch in a tropical garden at golden hour",
       "category": "weddings",
-      "caption": "Wedding | Booth setup",
+      "caption": "Garden wedding · Booth set-up",
       "featured": false
     },
     {
       "photo": "gallery/corporate-01",
-      "alt": "Placeholder for guests at a corporate product launch using the booth",
+      "alt": "Guests in suits with drinks gathered at a photo booth against a pink backdrop in a chandeliered ballroom, one collecting a print",
       "category": "corporate",
-      "caption": "Product launch | Colombo",
+      "caption": "Corporate · Launch night",
       "featured": true
     },
     {
       "photo": "gallery/corporate-02",
-      "alt": "Placeholder for a print showing a custom branded overlay",
+      "alt": "A hand picking up photo strips with blush-pink borders from a wooden table, a champagne glass and ballroom lights behind",
       "category": "corporate",
-      "caption": "Corporate | Branded overlay",
+      "caption": "Corporate · Branded prints",
       "featured": true
     },
     {
       "photo": "gallery/corporate-03",
-      "alt": "Placeholder for a conference attendee portrait",
+      "alt": "A conference guest with a lanyard studying a photo strip, a photo booth blurred in the bright atrium behind",
       "category": "corporate",
-      "caption": "Conference | Colombo",
+      "caption": "Conference · A keepsake",
       "featured": false
     },
     {
       "photo": "gallery/birthday-01",
-      "alt": "Placeholder for a birthday cake moment captured in the booth",
+      "alt": "A pink birthday cake with gold candles in focus, friends cheering beneath a pastel balloon arch in the background",
       "category": "birthdays",
-      "caption": "Birthday | Cake moment",
+      "caption": "Birthday · Cake moment",
       "featured": true
     },
     {
       "photo": "gallery/birthday-02",
-      "alt": "Placeholder for friends posing with props",
+      "alt": "Hands holding pink sunglasses, a gold glitter crown and a blank speech-bubble prop in front of pastel balloons and a rose-gold tinsel curtain",
       "category": "birthdays",
-      "caption": "Birthday | Props",
+      "caption": "Birthday · Props",
       "featured": true
     },
     {
       "photo": "gallery/birthday-03",
-      "alt": "Placeholder for a group holding their freshly printed photos",
+      "alt": "Five hands holding photo strips in a circle on a marble table scattered with pastel confetti and balloons",
       "category": "birthdays",
-      "caption": "Birthday | Instant prints",
+      "caption": "Birthday · Instant prints",
       "featured": false
     },
     {
       "photo": "gallery/festival-01",
-      "alt": "Placeholder for a crowd at a public festival event",
+      "alt": "Glowing paper lanterns and string lights above an evening festival crowd seen in silhouette",
       "category": "festivals",
-      "caption": "Festival | Public event",
+      "caption": "Festival · Lantern night",
       "featured": false
     },
     {
       "photo": "gallery/festival-02",
-      "alt": "Placeholder for a queue at the booth during a festival",
+      "alt": "People queuing at a pink-lit photo booth set between wooden screens and palms, under festoon lights at an outdoor fair",
       "category": "festivals",
-      "caption": "Festival | Colombo",
+      "caption": "Festival · The queue",
       "featured": false
     },
     {
       "photo": "gallery/festival-03",
-      "alt": "Placeholder for a close-up of a printed photo strip",
+      "alt": "A glossy photo print curling out of a white photo booth's print slot, warm festival lights blurred behind",
       "category": "festivals",
-      "caption": "Festival | Print strip",
+      "caption": "Festival · Fresh off the printer",
       "featured": false
     }
   ]
