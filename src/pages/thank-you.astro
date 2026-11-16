@@ -25,7 +25,7 @@ const steps = [
       <Icon name="check-circle" size={44} strokeWidth={1.6} />
     </span>
 
-    <h1 class="mt-7 text-4xl text-ink">Thanks for reaching out!</h1>
+    <h1 class="mt-7 text-4xl text-ink" data-thanks>Thanks for reaching out!</h1>
     <p class="mt-4 text-lg leading-relaxed text-ink-soft">
       Your quote request has landed. We will get back to you {
         config.contact.response_time
@@ -78,4 +78,18 @@ const steps = [
       </div>
     </div>
   </section>
+
+  <script>
+    // The /book form leaves the visitor's first name behind so the heading can
+    // greet them. Without it (storage blocked, or arrived another way), the
+    // generic heading stays.
+    try {
+      const name = sessionStorage.getItem('photopop:first-name');
+      const heading = document.querySelector('[data-thanks]');
+      if (name && heading) heading.textContent = `Thanks, ${name}!`;
+      sessionStorage.removeItem('photopop:first-name');
+    } catch {
+      /* storage unavailable */
+    }
+  </script>
 </BaseLayout>

@@ -69,6 +69,28 @@ export interface TitledBlock {
   description: string;
 }
 
+/** One question on the /book form, mirroring a question in the Google Form. */
+export interface FormField {
+  /** Google's entry ID — the number in the field's `entry.<id>` name. */
+  entry: string;
+  label: string;
+  type: 'text' | 'email' | 'tel' | 'textarea' | 'date' | 'radio' | 'checkbox';
+  required?: boolean;
+  help?: string;
+  /** Choice questions: must match the Google Form's option text exactly. */
+  options?: string[];
+  /** The Google question has an "Other:" option with a free-text box. */
+  other?: boolean;
+  /** `package` = pre-select from the ?package= link on the pricing cards. */
+  prefill?: 'package';
+  autocomplete?: string;
+}
+
+export interface FormSection {
+  title: string;
+  fields: FormField[];
+}
+
 export interface SiteConfig {
   site: {
     name: string;
@@ -117,7 +139,7 @@ export interface SiteConfig {
   };
   booking: {
     google_form_id: string;
-    form_height_px: number;
+    form_sections: FormSection[];
     promise: string;
     trust_signals: string[];
   };
@@ -261,9 +283,11 @@ export function googleFormUrl(): string | null {
   return `https://docs.google.com/forms/d/e/${id}/viewform`;
 }
 
-export function googleFormEmbedUrl(): string | null {
-  const url = googleFormUrl();
-  return url ? `${url}?embedded=true` : null;
+/** Where the /book form posts its answers — Google's own submit address. */
+export function googleFormActionUrl(): string | null {
+  const id = config.booking.google_form_id?.trim();
+  if (!id) return null;
+  return `https://docs.google.com/forms/d/e/${id}/formResponse`;
 }
 
 export default config;

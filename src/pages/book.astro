@@ -3,15 +3,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import FaqItem from '../components/FaqItem.astro';
 import Icon from '../components/Icon.astro';
+import BookingForm from '../components/BookingForm.astro';
 import {
   config,
   googleFormUrl,
-  googleFormEmbedUrl,
+  googleFormActionUrl,
   whatsappLink,
   hasRealPhone,
 } from '../lib/config';
 
-const embedUrl = googleFormEmbedUrl();
+const hasForm = !!googleFormActionUrl() && (config.booking.form_sections?.length ?? 0) > 0;
 const formUrl = googleFormUrl();
 const showWhatsApp = hasRealPhone();
 
@@ -90,20 +91,8 @@ const sideFaqs = [
       {/* -------------------------------------------------------- The form */}
       <div>
         {
-          embedUrl ? (
-            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-              <iframe
-                src={embedUrl}
-                title="PhotoPop quote request form"
-                loading="lazy"
-                width="100%"
-                height={config.booking.form_height_px}
-                style={`min-height:${config.booking.form_height_px}px`}
-                class="w-full border-0"
-              >
-                Loading form…
-              </iframe>
-            </div>
+          hasForm ? (
+            <BookingForm />
           ) : (
             /* Shown until booking.google_form_id is filled in — the page must
                never present an empty frame. See docs/GOOGLE_FORM_SETUP.md. */
@@ -133,14 +122,14 @@ const sideFaqs = [
 
               <p class="mt-6 text-xs text-ink-muted">
                 Site owner: add your Google Form ID to <code>src/config.yaml</code> to
-                replace this panel with the embedded booking form.
+                replace this panel with the booking form.
               </p>
             </div>
           )
         }
 
         {
-          formUrl && (
+          hasForm && formUrl && (
             <p class="mt-4 text-center text-sm text-ink-muted">
               Trouble with the form?{' '}
               <a
