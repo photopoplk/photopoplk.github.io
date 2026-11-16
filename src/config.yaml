@@ -98,11 +98,77 @@ about:
 
 # --- Booking ----------------------------------------------------------------
 booking:
-  # TODO: paste the ID from your Google Form's embed URL.
+  # The ID from your Google Form's URL (the part between /d/e/ and /viewform).
   # See docs/GOOGLE_FORM_SETUP.md. Until this is set, /book shows a
-  # WhatsApp + email fallback panel instead of the embedded form.
+  # WhatsApp + email fallback panel instead of the booking form.
   google_form_id: "1FAIpQLSfMgknkgPbEcB-Bchv7f9vlcMrBWbhpUY7h3SSfNKL5zqn0ug"
-  form_height_px: 1500
+
+  # The questions on /book. The site draws its own form from this list and
+  # sends the answers straight into the Google Form above, so they still land
+  # in the Responses tab, the linked Sheet and your notification emails.
+  #
+  # IMPORTANT: each `entry` is the ID Google gave that question, and each
+  # option must match the Google Form's wording EXACTLY (dashes included).
+  # If you add, remove or reword a question or option in Google Forms, run
+  #   npm run form:fields
+  # and copy what it prints over this list. Otherwise that answer is dropped.
+  form_sections:
+    - title: "Your event"
+      fields:
+        - entry: "979609244"
+          label: "What type of event is it?"
+          type: radio
+          required: true
+          other: true
+          options: ["Wedding", "Birthday", "Corporate event", "Festival / public event"]
+        - entry: "833047808"
+          label: "Event date"
+          type: date
+          required: true
+        - entry: "1837753660"
+          label: "Roughly how many guests?"
+          type: radio
+          required: true
+          options: ["Under 50", "50–100", "100–200", "200–350", "350+"]
+    - title: "What you're after"
+      fields:
+        - entry: "1566646210"
+          label: "Which package interests you?"
+          type: radio
+          # Pre-selects the package from /book?package=gold links on the pricing cards.
+          prefill: package
+          options: ["Not sure yet", "Silver (2 hrs)", "Gold (3 hrs)", "Platinum (4 hrs)", "Diamond (full day)"]
+        - entry: "339770413"
+          label: "Any add-ons?"
+          type: checkbox
+          other: true
+          options: ["Custom branding", "Premium backdrop", "Extended hours"]
+        - entry: "1207296696"
+          label: "Anything else we should know?"
+          help: "e.g. outdoor venue, specific colours, tight setup window"
+          type: textarea
+    - title: "How to reach you"
+      fields:
+        - entry: "117312751"
+          label: "Your name"
+          type: text
+          required: true
+          autocomplete: name
+        - entry: "413511991"
+          label: "Email address"
+          type: email
+          required: true
+          autocomplete: email
+        - entry: "135217590"
+          label: "WhatsApp / phone number"
+          help: "Include the country code, e.g. +94 77 123 4567"
+          type: tel
+          required: true
+          autocomplete: tel
+        - entry: "1891227693"
+          label: "Best time to reach you"
+          type: radio
+          options: ["Anytime", "Morning (8–12)", "Afternoon (12–5)", "Evening (5–9)"]
   promise: "No commitment. We reply within 2 hours."
   trust_signals:
     - "Professional DSLR quality"

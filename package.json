@@ -13,7 +13,8 @@
     "placeholders": "node scripts/generate-placeholders.mjs",
     "preview:bundle": "node scripts/build-preview.mjs",
     "brand": "node scripts/build-brand-assets.mjs",
-    "photos:clean": "node scripts/clean-photos.mjs"
+    "photos:clean": "node scripts/clean-photos.mjs",
+    "form:fields": "node scripts/read-form-fields.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

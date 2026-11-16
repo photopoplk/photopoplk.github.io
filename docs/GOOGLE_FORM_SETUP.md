@@ -1,6 +1,9 @@
 # Google Form Setup — PhotoPop Booking
 
-The `/book` page embeds a Google Form. Until you create one and paste its ID
+The `/book` page shows the site's own booking form, which sends every answer
+straight into a Google Form behind the scenes. Visitors never see Google, but
+you still get everything Google Forms gives you: the Responses tab, the linked
+Sheet and the notification emails. Until you create a form and paste its ID
 into `src/config.yaml`, the page shows a WhatsApp/email fallback panel instead —
 the site works either way, so there is no rush, but the form is what makes
 enquiries land in a spreadsheet automatically.
@@ -77,16 +80,12 @@ Also under Settings → Responses, turn **on**:
 
 ---
 
-## 4. Put the form ID into the site
+## 4. Connect the form to the site
 
-Click **Send** → the `<>` embed tab. You get HTML like:
-
-```html
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc7XkQ.../viewform?embedded=true" ...>
-```
-
-Copy **only the part between `/d/e/` and `/viewform`** — that long string
-starting `1FAIpQLS` is the form ID.
+Open the form's **Send** → link tab and copy the link. It looks like
+`https://docs.google.com/forms/d/e/1FAIpQLSc7XkQ.../viewform`. Copy **only the
+part between `/d/e/` and `/viewform`**. That long string starting `1FAIpQLS`
+is the form ID.
 
 Paste it into `src/config.yaml`:
 
@@ -95,29 +94,64 @@ booking:
   google_form_id: "1FAIpQLSc7XkQ..."
 ```
 
-Commit and push, then merge into main to publish. The form replaces the fallback
-panel automatically.
+Then let the site read your questions:
+
+```bash
+npm run form:fields
+```
+
+It prints a `form_sections:` block with every question, Google's ID for it
+(`entry`) and its options. Copy it over `booking.form_sections` in
+`config.yaml`, then make these small edits:
+
+- Change the phone question's `type: text` to `type: tel`.
+- Add `prefill: package` to the package question. Links like
+  `/book?package=gold` from the pricing cards then pre-select it.
+- Rename the section titles if you like. Keep **one section per Google Form
+  section** in the same order, because Google checks the number of sections.
+
+Commit and push, then merge into main to publish.
 
 ---
 
 ## 5. Check it
 
-- Load `/book` — the form should appear inside the page.
-- Submit a test response and confirm it lands in the Responses tab and that you
-  get the notification email.
-- Delete the test response.
-- If the form is cut off at the bottom, raise `booking.form_height_px` in
-  `config.yaml`. A cross-origin iframe cannot resize itself, so the height is
-  fixed — leave some slack.
+- Load `/book` and fill in the form with a test entry (name `TEST – delete me`).
+- After **Get my quote** the site should open `/thank-you`.
+- Confirm the answer arrives in the Responses tab with every field filled in,
+  and that you get the notification email. Then delete the test response.
+
+---
+
+## Whenever you edit the Google Form
+
+The site only sends answers for the questions listed in `config.yaml`, using
+Google's ID for each one and the exact option wording.
+
+- **Add, remove or reword a question or option in Google Forms** → run
+  `npm run form:fields` again and update `form_sections`. Otherwise Google
+  quietly drops that answer, or the whole response if the question is required.
+- **Making a question required in Google** → mark it `required: true` in
+  `config.yaml` too. Otherwise visitors can skip it and Google rejects
+  the response.
+- Re-test with one entry afterwards (step 5).
 
 ---
 
 ## Notes
 
-- **Prefilled package links.** The pricing cards link to `/book?package=gold`.
-  Google Forms cannot read that parameter through the embed, so the package
-  question is asked in the form itself. Not a problem — just do not expect the
-  dropdown to arrive pre-selected.
+- **How the submit works.** The site sends the answers to Google's own
+  `formResponse` address. Google doesn't let other sites read its reply, so
+  the page checks every answer itself (required fields, email format, phone
+  format, dates from today onwards) and then treats a delivered request as
+  success. If the visitor is offline, they get an error message with your
+  WhatsApp and email, and their answers stay on the page.
+- **Spam.** A hidden "website" field catches simple bots. Their submissions
+  are skipped and never reach your form.
+- **Without JavaScript** the form still works. It posts to Google and shows
+  Google's confirmation message, which links to `/thank-you`.
+- **Respondents must not need to sign in.** Keep *Collect email addresses* off
+  and *Limit to 1 response* off, or Google will refuse submissions from the site.
 - **Privacy.** The `/privacy` page automatically switches to the Google Forms
   wording once a form ID is set, so it stays accurate. Nothing to edit there.
 - **If you outgrow Forms.** The original spec (`Website_Architecture.md` §7)
