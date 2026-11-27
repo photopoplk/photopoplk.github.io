@@ -233,7 +233,6 @@ pricing:
         - "Everything in Platinum"
         - "Complete custom branding suite"
         - "Second crew member to help guests"
-        - "USB drive with all high-res photos"
 
 # Feature comparison matrix for the /packages table.
 # Values: true, false, or a short string label.
@@ -278,11 +277,6 @@ comparison:
     gold: "Standard"
     platinum: "Custom"
     diamond: "Full suite"
-  - feature: "USB drive with high-res photos"
-    silver: false
-    gold: false
-    platinum: false
-    diamond: true
 
 addons:
   - name: "Custom Branding"

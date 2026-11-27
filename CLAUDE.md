@@ -55,7 +55,8 @@ Astro 7 (static output) + Tailwind 4 (`@tailwindcss/vite`, tokens in
 3. **No review/rating structured data, ever** (`aggregateRating`, `Review`) —
    Google does not allow self-serving review markup.
 4. **Services not offered** — do not add back: 360 video booth, digital guest
-   book, live social display, dual/second booth. PhotoPop has **one booth**.
+   book, live social display, dual/second booth, USB drive of photos.
+   PhotoPop has **one booth**.
 5. **Facts that must stay consistent everywhere:**
    - Every package includes an on-site PhotoPop operator for the whole event
      (Diamond adds a second crew member).
