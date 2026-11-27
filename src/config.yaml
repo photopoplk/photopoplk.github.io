@@ -31,7 +31,7 @@ contact:
   email: "photopoplk@gmail.com"         # TODO: must receive mail before launch
   bookings_email: "photopoplk@gmail.com"  # TODO: same — or set to the hello@ address
   phone: "+94768856116"              # TODO: real number, country code, no spaces
-  whatsapp: "+94768856116"           # TODO: usually the same number
+  whatsapp: "+94742238276"           # WhatsApp button, chat links and booking-form fallback
   whatsapp_preset: "Hi PhotoPop, I'd like to book your photo booth for my event!"
   city: "Colombo"
   region: "Western Province"
@@ -54,7 +54,7 @@ social:
 # in `metrics` + `testimonials` once you have real events and real reviews.
 launch:
   pre_launch: true
-  launch_label: "Launching 2026 November"
+  launch_label: "Now booking events from January 2027"
   founding_offer: "Founding-client rates for our first 10 bookings"
   founding_offer_detail: "Be one of our first events and lock in launch pricing — plus a free custom branded photo overlay."
 
@@ -181,7 +181,7 @@ booking:
 # room to negotiate and keeps the cost structure out of competitors' hands.
 pricing:
   currency: "LKR"
-  note: "All packages include setup, teardown and props. Travel outside Colombo is quoted separately."
+  note: "All packages include an on-site operator, setup, teardown and props. Travel outside Colombo is quoted separately."
   packages:
     - id: "silver"
       name: "Silver"
@@ -192,7 +192,9 @@ pricing:
       featured: false
       features:
         - "Unlimited photo sessions"
-        - "Digital photos via WhatsApp"
+        - "On-site PhotoPop operator throughout"
+        - "Unlimited 4x6 prints on the spot"
+        - "Cloud photo sharing (WhatsApp-friendly)"
         - "Standard white or black backdrop"
         - "Full prop box included"
         - "Guest instruction card"
@@ -206,10 +208,8 @@ pricing:
       featured: true
       features:
         - "Everything in Silver"
-        - "Unlimited 4x6 prints on the spot"
         - "Premium backdrop options"
         - "Branded photo overlay"
-        - "Online gallery link for all guests"
     - id: "platinum"
       name: "Platinum"
       price: 60000
@@ -221,7 +221,6 @@ pricing:
         - "Everything in Gold"
         - "Fully custom branded overlay"
         - "Premium + custom backdrop"
-        - "Dedicated booth attendant"
         - "Priority scheduling"
     - id: "diamond"
       name: "Diamond"
@@ -233,8 +232,7 @@ pricing:
       features:
         - "Everything in Platinum"
         - "Complete custom branding suite"
-        - "Dedicated attendant + assistant"
-        - "USB drive with all high-res photos"
+        - "Second crew member to help guests"
 
 # Feature comparison matrix for the /packages table.
 # Values: true, false, or a short string label.
@@ -244,7 +242,17 @@ comparison:
     gold: true
     platinum: true
     diamond: true
-  - feature: "Digital delivery (WhatsApp + gallery link)"
+  - feature: "On-site PhotoPop operator"
+    silver: true
+    gold: true
+    platinum: true
+    diamond: "+ assistant"
+  - feature: "Unlimited instant prints"
+    silver: true
+    gold: true
+    platinum: true
+    diamond: true
+  - feature: "Cloud photo sharing (WhatsApp-friendly)"
     silver: true
     gold: true
     platinum: true
@@ -259,11 +267,6 @@ comparison:
     gold: true
     platinum: true
     diamond: true
-  - feature: "Unlimited instant prints"
-    silver: false
-    gold: true
-    platinum: true
-    diamond: true
   - feature: "Premium backdrop options"
     silver: false
     gold: true
@@ -274,16 +277,6 @@ comparison:
     gold: "Standard"
     platinum: "Custom"
     diamond: "Full suite"
-  - feature: "Dedicated booth attendant"
-    silver: false
-    gold: false
-    platinum: true
-    diamond: "+ assistant"
-  - feature: "USB drive with high-res photos"
-    silver: false
-    gold: false
-    platinum: false
-    diamond: true
 
 addons:
   - name: "Custom Branding"
@@ -312,7 +305,7 @@ how_it_works:
     icon: "truck"
   - step: 3
     title: "Everyone Enjoys"
-    description: "Guests shoot unlimited photos, walk away with prints, and get digital copies the same day."
+    description: "Guests shoot unlimited photos, walk away with prints, and get digital copies within 24 hours."
     icon: "smile"
 
 why_us:
@@ -321,9 +314,9 @@ why_us:
   - title: "Fast, Clean Setup"
     description: "The booth arrives pre-configured. Twenty minutes and we are live, with no disruption to your run sheet."
   - title: "Instant Results"
-    description: "Prints in seconds and digital copies the same day. Nobody waits weeks for photos."
-  - title: "Genuinely Self-Service"
-    description: "An intuitive touchscreen means guests use it on their own. No queue-master required."
+    description: "Prints in seconds and digital copies within 24 hours. Nobody waits weeks for photos."
+  - title: "Self-Service, Never Unattended"
+    description: "Guests run the touchscreen themselves, and a PhotoPop operator stays with the booth all event to help and keep things moving."
   - title: "Local Expertise"
     description: "We know Colombo venues, power quirks, monsoon season, and how Sri Lankan events actually run."
   - title: "Honest Pricing"

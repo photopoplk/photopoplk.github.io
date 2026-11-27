@@ -51,11 +51,12 @@ const gaEnabled = Boolean(config.analytics.google_analytics_id?.trim());
       {
         usesGoogleForm ? (
           <p>
-            Our quote request form is a Google Form. When you submit it, your
-            answers are stored in Google Forms and Google Sheets under our
-            business account, and Google processes that data on our behalf under
-            its own privacy terms. Loading the embedded form may also set
-            cookies from Google in your browser. If you would rather not use it,
+            The quote request form on our booking page sends your answers to
+            Google Forms. They are stored in Google Forms and Google Sheets under
+            our business account, and Google processes that data on our behalf
+            under its own privacy terms. The form is part of our own page, so
+            nothing from Google loads until you press submit. If you would rather
+            not use it,
             email us at {config.contact.email} instead — the same information by
             email works just as well.
           </p>

@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/cloud-setup.mjs\"",
+            "timeout": 300,
+            "statusMessage": "Installing dependencies for the cloud session"
+          }
+        ]
+      }
+    ]
+  }
+}
