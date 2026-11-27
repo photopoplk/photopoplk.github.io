@@ -13,8 +13,10 @@ name: Build and deploy
 on:
   push:
     branches: [develop, main]
+  # Pull requests into develop (e.g. from Claude Code cloud sessions) or main
+  # get a build check before they are merged.
   pull_request:
-    branches: [main]
+    branches: [develop, main]
   # Adds a "Run workflow" button on the Actions tab.
   workflow_dispatch:
 

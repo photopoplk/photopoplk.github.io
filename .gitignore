@@ -5,8 +5,10 @@ preview/
 # generated types
 .astro/
 
-# local Claude Code / editor tooling
-.claude/
+# local Claude Code / editor tooling — only the shared project settings
+# (.claude/settings.json) are committed; everything else stays local.
+.claude/*
+!.claude/settings.json
 
 # dependencies
 node_modules/
